@@ -3,15 +3,7 @@
 struct SEntity
 {
 	// Index of SEntity
-	int Index;
+	int Index = -1;
+	int Version = -1;
 	virtual ~SEntity() {};
-};
-
-struct SEN : public SEntity
-{
-
-};
-
-struct SSS : public SEN {
-
 };

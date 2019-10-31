@@ -20,19 +20,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SEntity.hpp">
+    <ClInclude Include="TemplatePackUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SSystem.hpp">
+    <ClInclude Include="Types\SArcheType.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SComponent.hpp">
+    <ClInclude Include="Types\SChunk.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SEntityManager.hpp">
+    <ClInclude Include="Types\SComponent.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SArcheType.hpp">
+    <ClInclude Include="Types\SEntity.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\SEntityManager.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\SSystem.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\SArcheTypeManager.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateUtils\TemplateUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
