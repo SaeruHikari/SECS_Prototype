@@ -13,13 +13,17 @@ namespace TemplateUtils
 	{
 		size_t _hash = typeid(T).hash_code();
 		// do insert, hash small ~ big
-		for (size_t i = _pos - 1; i > 0; i--)
+		for (int i = _pos - 1; i > 0; i--)
 		{
 			if (_hash < _targ[i])
 			{
 				_targ[i + 1] = _targ[i];
 			}
-			else _targ[i + 1] = _hash;
+			else 
+			{ 
+				_targ[i + 1] = _hash;
+				break;
+			}
 		}
 	}
 	template<typename T, typename T2, typename ... __Ts>

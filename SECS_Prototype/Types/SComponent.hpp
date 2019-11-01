@@ -41,6 +41,22 @@ namespace SECS
 			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
 		}
 		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+	};
+
+	struct ComponentD : public SComponent
+	{
+		ComponentD()
+		{
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+		std::string str1;
+		std::string str2;
+		std::string str3;
 	};
 #endif
 }

@@ -1,2 +1,27 @@
 ﻿  SECS_Prototype.cpp
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(50,1): warning C4267:  “return”: 从“size_t”转换到“int”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(117,1): warning C4267:  “=”: 从“size_t”转换到“int32_t”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(40,1): warning C4267:  “return”: 从“size_t”转换到“int”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(77): message :  查看对正在编译的函数 模板 实例化“int SECS::SArcheType::GetComponentIndex<T>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(77): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(77): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(77): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(77): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(143): message :  查看对正在编译的函数 模板 实例化“void *SECS::SChunk::__getPtr<T>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(143): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(143): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(143): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(143): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(33): message :  查看对正在编译的函数 模板 实例化“T *SECS::SChunk::ConstructOnChunk<T>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(33): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(33): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(33): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(33): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(37): message :  查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::__constructOnChunk_Internal<T1>(SECS::SChunk *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(37): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(37): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(37): message :             T1=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(37): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(14): message :  查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::__constructOnChunk_Internal<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(SECS::SChunk *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(25): message :  查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
   SECS_Prototype.vcxproj -> D:\Coding\SECS_Prototype\x64\Debug\SECS_Prototype.exe

@@ -17,16 +17,26 @@ namespace SECS
 			// Get archetype of this combination of components.
 			auto* arMng = SArcheTypeManager::Get();
 			auto* _archeType = arMng->GetArcheType<Components...>(&NewEntity);
-#if defined(DEBUG) | defined(_DEBUG)
-			std::cout << _archeType << std::endl;
-#endif
+
 			// Get chunk with the _archtype.
 			// Always init one now   !!!!!
-			auto _chunk = arMng->GetFreeSChunk(_archeType);
+			auto* _chunk = arMng->GetFreeSChunk(_archeType);
 			// Fill in the chunk.
+			__constructOnChunk_Internal<Components...>(_chunk);
 
 			return NewEntity;
 		}
-
+	private:
+		template<typename T>
+		static void __constructOnChunk_Internal(SChunk* _chunk)
+		{
+			_chunk->ConstructOnChunk<T>();
+		}
+		template<typename T1, typename T2, typename... Ts>
+		static void __constructOnChunk_Internal(SChunk* _chunk)
+		{
+			__constructOnChunk_Internal<T1>(_chunk);
+			__constructOnChunk_Internal<T2, Ts...>(_chunk);
+		}
 	};
 }

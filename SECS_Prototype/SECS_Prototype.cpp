@@ -23,6 +23,7 @@ int main()
 	//    (3) Place entity and create all components of template input in the chunk.
 	// 4. Finish construction and work with freeChunkList pointer, etc... 
 	SEntityManager::CreateEntity<ComponentA, ComponentB, ComponentC>();
+	SEntityManager::CreateEntity<ComponentA, ComponentB, ComponentD>();
 
 
 	//(unimplemented)(4)! Case needs customized constructor: 
