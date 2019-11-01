@@ -38,16 +38,19 @@ namespace TemplateUtils
 			if (sizeof...(__Args) != sizeof...(__InArgs)) return false;
 			else
 			{
-				size_t __selfHash[sizeof...(__Args)];
-				size_t __inHash[sizeof...(__InArgs)];
+				size_t __selfHash[sizeof...(__Args) + 1];
+				size_t __inHash[sizeof...(__InArgs) + 1];
 				getHash<__InArgs...>(sizeof...(__InArgs), __inHash);
 				getHash<__Args...>(sizeof...(__InArgs), __selfHash);
 				for (size_t i = 0; i < sizeof...(__InArgs); i++)
 				{
-					if (__inHash[i] != __selfHash[i]) return false;
+					if (__inHash[i] != __selfHash[i])
+					{
+						return false;
+					}
 				}
-				return true;
 			}
+			return true;
 		}
 	};
 };

@@ -1,39 +1,46 @@
 #pragma once
+#include <iostream>
 
-struct SComponent {
-	SComponent() {
-		std::cout << "Data Com: ";
-	}
-
-	virtual ~SComponent() {
-
-	}
-};
-
-// Debug
-struct ComponentA : public SComponent
+namespace SECS
 {
-	ComponentA()
-	{
-		std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
-	}
-	int a = 5;
-};
+	struct SComponent {
+		SComponent() {
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << "Data Com: ";
+#endif
+		}
 
-struct ComponentB : public SComponent
-{
-	ComponentB()
-	{
-		std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
-	}
-	float b = 5;
-};
+		virtual ~SComponent() {
 
-struct ComponentC : public SComponent
-{
-	ComponentC()
+		}
+	};
+#if defined(DEBUG) || defined(_DEBUG)
+	// Debug use!
+	struct ComponentA : public SComponent
 	{
-		std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
-	}
-	char c[4] = "WTF";
-};
+		ComponentA()
+		{
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+		}
+		int a = 5;
+	};
+
+	struct ComponentB : public SComponent
+	{
+		ComponentB()
+		{
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+		}
+		float b = 5;
+	};
+
+	struct ComponentC : public SComponent
+	{
+		ComponentC()
+		{
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+		}
+		char c[4] = "WTF";
+	};
+#endif
+}

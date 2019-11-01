@@ -1,9 +1,15 @@
+// SEntity is the Entity part of ECS. 
+// Contains to size_t to describe index and version info.
 #pragma once
 
-struct SEntity
+namespace SECS
 {
-	// Index of SEntity
-	int Index = -1;
-	int Version = -1;
-	virtual ~SEntity() {};
-};
+	struct SEntity
+	{
+		// Index of SEntity
+	    size_t Index = -1;
+		size_t Version = -1;
+		virtual ~SEntity() {};
+	};
+}
+

@@ -1,2 +1,4 @@
 ﻿  SECS_Prototype.cpp
+D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(15,22): warning C4099: “SECS::SChunk”: 类型名称以前使用“struct”现在使用的是“class”
+D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(9): message : 参见“SECS::SChunk”的声明
   SECS_Prototype.vcxproj -> D:\SECS_Prototype\Debug\SECS_Prototype.exe
