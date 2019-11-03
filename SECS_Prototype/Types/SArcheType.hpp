@@ -3,14 +3,16 @@
 #include "SComponent.hpp"
 #include <cassert>
 #include <iostream>
+#include "Containers\SChunkList.hpp"
+
 
 namespace SECS
 {
 	struct SChunk;
-	class SChunkList;
 	// ArcheType.
 	struct SArcheType
 	{
+		friend class SEntityManager;
 		friend class SArcheTypeManager;
 		friend struct SChunk;
 	protected:
@@ -27,7 +29,7 @@ namespace SECS
 	public:
 		// Returns -1 when not such component found.
 		template<typename T>
-		int GetComponentIndex()
+		inline int GetComponentIndex()
 		{
 			size_t _hash = typeid(T).hash_code();
 			size_t _hashB = typeid(ComponentB).hash_code();
@@ -43,7 +45,7 @@ namespace SECS
 		}
 
 		// hash code version of GetComponentIndex<T>()
-		int GetComponentIndex(size_t _hash)
+		inline int GetComponentIndex(size_t _hash)
 		{
 			for (size_t i = 0; i < ComponentNum; i++)
 			{
@@ -53,7 +55,7 @@ namespace SECS
 		}
 	protected:
 		template<typename __C>
-		void __init__Internal()
+		inline void __init__Internal()
 		{
 			size_t _hash = typeid(__C).hash_code();
 			size_t sizeOf = sizeof(__C);
@@ -100,14 +102,14 @@ namespace SECS
 #endif
 		}
 		template<typename __C1, typename __C2, typename ... __Cs>
-		void __init__Internal()
+		inline void __init__Internal()
 		{
 			__init__Internal<__C1>();
 			__init__Internal<__C2, __Cs...>();
 		}
 
 		template<typename ... Components>
-		void Init(SEntity* e)
+		inline void Init(SEntity* e)
 		{
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << std::endl << "Start construct: " << typeid(*this).name() << std::endl;
@@ -127,13 +129,15 @@ namespace SECS
 
 		}
 
+		// Not implemented.
 		template<typename __C>
-		__C* __findInChunk(SChunk* __chunk)
+		inline __C* __findInChunk(SChunk* __chunk)
 		{
 			return nullptr;
 		}
+		// Not implemented.
 		template<typename __C, typename ... Params>
-		void __createComponentAtWithParams(Params&& ... __params)
+		inline void __createComponentAtWithParams(Params&& ... __params)
 		{
 			__C* __ptr = __findInChunk<__C>();
 			new(__ptr) __C(__params...);

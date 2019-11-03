@@ -4,13 +4,13 @@ Description:					Chunk master class.
 Details:		
 *******************************************************************************************/
 #pragma once
+#include <stdlib.h>
 #include "SArcheType.hpp"
 
 namespace SECS
 {
 	struct SArcheType;
 	class SArcheTypeManager;
-	class SChunkList;
 	class SEntityManager;
 	///<summary>
 	/// Chunk is a block buffer that contains properties
@@ -20,7 +20,6 @@ namespace SECS
 	{
 		friend class SArcheTypeManager;
 		friend struct SArcheType;
-		friend class SChunkList;
 		friend class SEntityManager;
 	protected:
 		// aligned structure of size 256
@@ -38,15 +37,23 @@ namespace SECS
 			// Pad
 			alignas(1) char Flag[256 - 40] = {0};
 		};
+		// Size 16*1024
 		void* buff;
+
 		void* entityPtr = nullptr;
 		void** comListPtrs = nullptr;
+
 		void** wrkptrs = nullptr;
+		void* entityWrkPtr = nullptr;
 		ChunkProperties* properties;
 	public:
 		ChunkProperties* GetChunkProperty()
 		{
 			return properties;
+		}
+		~SChunk()
+		{
+			free(buff);
 		}
 	protected:
 		SChunk()
@@ -59,20 +66,14 @@ namespace SECS
 			// we need to have a template version call.
 		}
 		
-		size_t GetProperUnitCount(size_t chunkSize, size_t arcSize)
+		inline size_t GetProperUnitCount(size_t chunkSize, size_t arcSize)
 		{
 			return chunkSize / arcSize;
 		}
 
-		// Check if there is data on given index.
-		bool __haveEntity(size_t n)
-		{
-			return properties->Flag[n];
-		}
-
 		// Returns work ptr for type T.
 		template<typename T>
-		void* __getPtr()
+		inline void* __getCompWrkPtr()
 		{
 			int index = properties->ArcheType->GetComponentIndex<T>();
 			if (index >= 0)
@@ -82,45 +83,58 @@ namespace SECS
 			return nullptr;
 		}
 
-		// Unsafe get.
-		// Not implemented now (? Not necessary)
+		// get entity ptr.
 		template<typename T>
-		void* __unsafeGetPtr(size_t n)
+		inline T* __getEntityPtr(size_t n)
 		{
-			if (n < properties->FreeUnits)
+			if (n > properties->Count - properties->FreeUnits)
 			{
 				return nullptr;
 			}
-			else return nullptr;
+			return (T*)entityPtr + n;
+		}
+
+		// get comp ptr.
+		template<typename T>
+		inline T* __getCompPtr(size_t n)
+		{
+			if (n > properties->Count - properties->FreeUnits)
+			{
+				return nullptr;
+			}
+			
+			int index = properties->ArcheType->GetComponentIndex<T>();
+			return ((T*)(comListPtrs[index])) + n;
 		}
 
 		// Returns false when the chunk is full.
-		bool __offsetWrkptrs(size_t units)
+		inline bool __offsetWrkptrs(size_t units)
 		{
 			properties->FreeUnits -= units;
 			if (properties->FreeUnits <= 0) return false;
 			for (size_t i = 0; i < properties->ArcheType->ComponentNum; i++)
 			{
 				// Do offset works.
-				wrkptrs[i] = (unsigned char*)wrkptrs[i] + properties->ArcheType->ComponentOffsets[i] * units;
+				wrkptrs[i] = (unsigned char*)wrkptrs[i] + properties->ArcheType->SizeOfs[i] * units;
+				entityWrkPtr = (unsigned char*)entityWrkPtr + properties->ArcheType->EntitySize * units;
 			}
 		}
 
 		// Init Chunk Layout with given Component templates.
-		void InitChunkLayout(SArcheType* arcType)
+		inline void InitChunkLayout(SArcheType* arcType)
 		{
 			properties->ArcheType = arcType;
-			size_t size_E = arcType->EntitySize;
-			size_t size_Comps = arcType->ComponentTotalSize;
-			size_t size_Arc = size_E + size_Comps;
 			// Calculate proper unit of the hole chunk
-			properties->Count = GetProperUnitCount(properties->ChunkBuffSize, size_Arc);
+			properties->Count = GetProperUnitCount(properties->ChunkBuffSize, arcType->ComponentTotalSize + arcType->EntitySize);
 			properties->FreeUnits = properties->Count;
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << "SChunk: Generate " << properties->Count << " Units" << std::endl;
+#endif
 			wrkptrs = new void* [arcType->ComponentNum];
 			comListPtrs = new void* [arcType->ComponentNum];
 			entityPtr = (unsigned char*)buff + sizeof(*properties);
-			int test = sizeof(*properties);
-			comListPtrs[0] = (unsigned char*)entityPtr + properties->Count * arcType->EntitySize;
+			entityWrkPtr = entityPtr;
+			comListPtrs[0] = (unsigned char*)entityWrkPtr + properties->Count * arcType->EntitySize;
 			unsigned char* startptr = (unsigned char*)comListPtrs[0];
 			for (size_t i = 0; i < arcType->ComponentNum; i++)
 			{
@@ -131,6 +145,8 @@ namespace SECS
 				std::cout << "SChunk: malloc," << properties->ArcheType->typeHashes[i] << " ptr offset: " << (unsigned char*)wrkptrs[i] - (unsigned char*)buff << std::endl;
 #endif
 			}
+			// properties->ChunkBuffSize - arcType->ComponentTotalSize * properties->Count
+			//memset(startptr + arcType->ComponentTotalSize * properties->Count, 0, properties->ChunkBuffSize - (arcType->ComponentTotalSize + arcType->EntitySize) * properties->Count);
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << std::endl;
 #endif
@@ -138,15 +154,39 @@ namespace SECS
 		}
 
 		template<typename T>
-		T* ConstructOnChunk()
+		inline T* __constructOnChunk_Internal()
 		{
-			T* Tptr = (T*)__getPtr<T>();
+			T* Tptr = (T*)__getCompWrkPtr<T>();
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "Sakura Chunk: Construct Comp " << typeid(T).name() << " offset to buffer: " << (unsigned char*)Tptr - (unsigned char*)buff << std::endl;
 #endif
-			return new(Tptr) T();
+			T* res = new(Tptr) T();
+			return res;
 		}
 
+		template<typename T1, typename T2, typename... Ts>
+		inline void __constructOnChunk_Internal()
+		{
+			__constructOnChunk_Internal<T1>();
+			__constructOnChunk_Internal<T2, Ts...>();
+		}
+
+		// Returns the index in chunk.
+		template<typename... Ts>
+		inline int ConstructionOnChunk(SEntity&& entity)
+		{
+			*(SEntity*)entityWrkPtr = entity;
+			__constructOnChunk_Internal<Ts...>();
+			if (!__offsetWrkptrs(1)) // Full
+			{
+				properties->ArcheType->freeChunk = nullptr;
+				
+#if defined(DEBUG) || defined(_DEBUG)
+				std::cout << "CHUNK FULL!" << std::endl;
+#endif
+			}
+			return properties->Count - properties->FreeUnits - 1;
+		}
 	};
 
 

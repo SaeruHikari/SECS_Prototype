@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
@@ -121,8 +121,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Managers\SArcheTypeManager.hpp" />
     <ClInclude Include="TemplateUtils\TemplateUtils.hpp" />
+    <ClInclude Include="Types\Containers\SArcheTypeList.hpp" />
     <ClInclude Include="Types\Containers\SChunkList.hpp" />
     <ClInclude Include="Types\SArcheType.hpp" />
     <ClInclude Include="Types\SChunk.hpp" />
@@ -164,6 +165,10 @@
     <ClInclude Include="Managers\SEntityManager.hpp" />
     <ClInclude Include="Types\SSystem.hpp" />
     <ClInclude Include="TemplateUtils\TemplatePackUtils.hpp" />
+    <ClInclude Include="Types\SWorld.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

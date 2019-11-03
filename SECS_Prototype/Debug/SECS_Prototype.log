@@ -1,4 +1,29 @@
 ﻿  SECS_Prototype.cpp
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(15,22): warning C4099: “SECS::SChunk”: 类型名称以前使用“struct”现在使用的是“class”
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(9): message : 参见“SECS::SChunk”的声明
-  SECS_Prototype.vcxproj -> D:\SECS_Prototype\Debug\SECS_Prototype.exe
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(50,25): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(114,25): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(138,25): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(19,15): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(32,15): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(36,14): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(45,15): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(71,14): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(78,15): warning C4244:  “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(104,24): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(33): message :  查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,SECS::SArcheTypeManager *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(69): message :  查看对正在编译的函数 模板 实例化“void SECS::SWorld::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(48,23): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(99): message :  查看对正在编译的函数 模板 实例化“SECS::SArcheTypeList SECS::SArcheTypeManager::CompFilterGetArcheTypes<SECS::ComponentA,SECS::ComponentB>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(33): message :  查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,SECS::SArcheTypeManager *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(36,25): warning C4018:  “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(105): message :  查看对正在编译的函数 模板 实例化“int SECS::SArcheType::GetComponentIndex<T>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(105): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(105): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(105): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(105): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message :  查看对正在编译的函数 模板 实例化“T *SECS::SChunk::__getCompPtr<SECS::ComponentA>(size_t)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(109): message : D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(120) : warning C4715: “SECS::SChunk::__offsetWrkptrs”: 不是所有的控件路径都返回值
+  SECS_Prototype.vcxproj -> D:\Coding\SECS_Prototype\Debug\SECS_Prototype.exe

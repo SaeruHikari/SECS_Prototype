@@ -4,12 +4,31 @@
 
 namespace SECS
 {
+	class SWorld;
 	struct SEntity
 	{
-		// Index of SEntity
-	    size_t Index = -1;
-		size_t Version = -1;
+		// Only entity manager can set Index and version value.
+		friend class SEntityManager;
+		friend class SWorld;
+	public:
+		inline size_t GetIndex()
+		{
+			return Index;
+		}
+		inline size_t GetGeneration()
+		{
+			return generation;
+		}
+		inline SWorld* GetWorld()
+		{
+			return world;
+		}
 		virtual ~SEntity() {};
+	private:
+		// Index of SEntity
+		SWorld* world = nullptr;
+	    size_t Index = -1;
+		size_t generation = -1;
 	};
 }
 

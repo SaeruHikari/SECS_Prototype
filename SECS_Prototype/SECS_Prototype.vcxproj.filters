@@ -47,8 +47,17 @@
     <ClInclude Include="TemplateUtils\TemplatePackUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Types\Containers\SArcheTypeList.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="Types\Containers\SChunkList.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Types\SWorld.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

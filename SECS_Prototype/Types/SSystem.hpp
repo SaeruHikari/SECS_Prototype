@@ -2,5 +2,8 @@
 
 namespace SECS
 {
+	class SSystem
+	{
 
+	};
 }
