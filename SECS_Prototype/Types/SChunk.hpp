@@ -102,7 +102,6 @@ namespace SECS
 			{
 				return nullptr;
 			}
-			
 			int index = properties->ArcheType->GetComponentIndex<T>();
 			return ((T*)(comListPtrs[index])) + n;
 		}

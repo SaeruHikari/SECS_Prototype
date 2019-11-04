@@ -158,6 +158,7 @@
     <ClInclude Include="TemplateUtils\TemplateUtils.hpp" />
     <ClInclude Include="Types\Containers\SArcheTypeList.hpp" />
     <ClInclude Include="Types\Containers\SChunkList.hpp" />
+    <ClInclude Include="Types\Containers\SSystemList.hpp" />
     <ClInclude Include="Types\SArcheType.hpp" />
     <ClInclude Include="Types\SChunk.hpp" />
     <ClInclude Include="Types\SComponent.hpp" />

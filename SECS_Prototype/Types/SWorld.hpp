@@ -1,6 +1,7 @@
 #pragma once
 #include "..\Managers\SArcheTypeManager.hpp"
 #include "..\Managers\SEntityManager.hpp"
+#include "..\Types\Containers\SSystemList.hpp"
 
 namespace SECS
 {
@@ -51,8 +52,15 @@ namespace SECS
 		{
 			return ArcheTypeManager;
 		}
+		template<typename ... Cs>
+		inline SSystem* AddSystem()
+		{
+
+		}
 	private:
 		SArcheTypeManager* ArcheTypeManager = nullptr;
 		SEntityManager* EntityManager = nullptr;
+		SSystemList ActiveSystems;
+		SSystemList DeactiveSystems;
 	};
 }

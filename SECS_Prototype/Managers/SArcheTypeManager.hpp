@@ -33,8 +33,9 @@ namespace SECS
 		std::unordered_map<size_t, SArcheTypeList> m_TypeLookup;
 
 	protected:
+		// No filter version.
 		template<typename ... Cs>
-		inline SArcheTypeList CompFilterGetArcheTypes()
+		inline SArcheTypeList CompsGetArcheTypes()
 		{
 			SArcheTypeList resList;
 			size_t* InHashes = TemplatePackUtils::GetHashes<Cs...>();

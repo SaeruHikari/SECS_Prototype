@@ -94,15 +94,16 @@ namespace SECS
 		}
 
 		template<typename ... Cs>
-		inline void Each(std::function<void(SEntity, Cs*...)> func, SArcheTypeManager* arMng)
+		inline void Each(std::function<void(SEntity, Cs *...)> func, SArcheTypeList arclist)
 		{
-			size_t countC = sizeof...(Cs);
-			// Iterate ArcheTypes:
-			SArcheTypeList arclist = arMng->CompFilterGetArcheTypes<Cs...>();
 			for (auto _type : arclist)
 			{
 				for (auto _chunk : *_type->chunks)
 				{
+					// Batch func call for better performance.
+					// -----------------------------
+
+					// !
 					for (int i = 0; i < _chunk->properties->Count - _chunk->properties->FreeUnits; i++)
 					{
 						SEntity* entityPtr = _chunk->__getEntityPtr<SEntity>(i);
@@ -114,6 +115,16 @@ namespace SECS
 				}
 			}
 			// Only iterate alive entities.
+		}
+
+		template<typename ... Cs>
+		inline void Each(std::function<void(SEntity, Cs*...)> func, SArcheTypeManager* arMng)
+		{
+			size_t countC = sizeof...(Cs);
+			// Iterate ArcheTypes:
+			SArcheTypeList arclist = arMng->CompsGetArcheTypes<Cs...>();
+			// Deal with arclist.
+			Each<Cs...>(func, arclist);
 		}
 	};
 	SEntityManager* SEntityManager::_this = nullptr;
