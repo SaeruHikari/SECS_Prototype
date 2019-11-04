@@ -16,6 +16,7 @@ namespace SECS
 	{
 		friend class SEntityManager;
 		friend class SWorld;
+		friend class SSystem;
 	private:
 		static SArcheTypeManager* Get()
 		{
@@ -37,43 +38,41 @@ namespace SECS
 		template<typename ... Cs>
 		inline SArcheTypeList CompsGetArcheTypes()
 		{
-			SArcheTypeList resList;
+			SArcheTypeList resList = SArcheTypeList();
 			size_t* InHashes = TemplatePackUtils::GetHashes<Cs...>();
 			size_t  InComps = sizeof...(Cs);
 			// Iterate around map.
-			for (auto _pair : m_TypeLookup)
+			for (auto _pair = m_TypeLookup.begin(); _pair != m_TypeLookup.end(); ++_pair)
 			{
-				if(_pair.first < InComps) continue;
+				if(_pair->first < InComps) continue;
 				// Iterate
 				size_t FocusHash = 0;
-				for (int i = 0; i < _pair.second.size(); i++)
+				for (int i = 0; i < _pair->second.size(); i++)
 				{
-					if (_pair.second[i]->typeHashes[0] > InHashes[0])
+					if (_pair->second[i]->typeHashes[0] > InHashes[0])
 					{
 						continue;
 					}
-					for (int j = 0; j < _pair.second[i]->ComponentNum; j++)
+					for (int j = 0; j < _pair->second[i]->ComponentNum; j++)
 					{
-						size_t test0 = _pair.second[i]->typeHashes[j];
-						size_t test1 = InHashes[FocusHash];
-						if (_pair.second[i]->typeHashes[j] == InHashes[FocusHash])
+						if (_pair->second[i]->typeHashes[j] == InHashes[FocusHash])
 						{
 							FocusHash += 1;
 						}
 						// All match, return this archetype.
 						if (FocusHash == InComps)
 						{
-							resList.push_back(_pair.second[i]);
+							resList.push_back(_pair->second[i]);
 							break;
 						}
 						// ArcheType Hash already bigger than in hash tail, break.
-						if(_pair.second[i]->typeHashes[j] > InHashes[InComps-1])
+						if(_pair->second[i]->typeHashes[j] > InHashes[InComps-1])
 							break;
 						// else do nothing and step in next loop.
 					}
 				}
 			}
-			return std::move(resList);
+			return resList;
 		}
 
 		template<typename ... Cs>
@@ -117,18 +116,7 @@ namespace SECS
 		{
 			SArcheType* Arche = new SArcheType();
 			Arche->Init<Cs...>(e);	
-			// found list
-			if (m_TypeLookup.find(Arche->ComponentNum) != m_TypeLookup.end())
-			{
-				m_TypeLookup[Arche->ComponentNum].push_back(Arche);
-			}
-			// Not found, init new list and refers to the list.
-			else
-			{
-				SArcheTypeList NewList;
-				NewList.push_back(Arche);
-				m_TypeLookup[Arche->ComponentNum] = NewList;
-			}
+			m_TypeLookup[Arche->ComponentNum].push_back(Arche);
 			return Arche;
 		}
 
@@ -138,19 +126,18 @@ namespace SECS
 			SChunk* _chunk = nullptr;
 			if (arcType->chunks == nullptr)
 			{
-#if defined(DEBUG) || (_DEBUG)
-				std::cout << "No free chunk, construct Chunk: ";
-#endif
 				_chunk = new SChunk();
 				_chunk->InitChunkLayout(arcType);
-				SChunkList* chunklist = new SChunkList();
-				_chunk->properties->ListIndex = chunklist->size();
-				chunklist->push_back(_chunk);
-				arcType->chunks = chunklist;
+				arcType->chunks = new SChunkList;
+				_chunk->properties->ListIndex = 0;
+				arcType->chunks->push_back(_chunk);
 				arcType->freeChunk = _chunk;
 			}	
 			else if (arcType->freeChunk == nullptr)
 			{
+#if defined(DEBUG) || (_DEBUG)
+				std::cout << "No free chunk, construct Chunk: ";
+#endif
 				_chunk = new SChunk();
 				_chunk->InitChunkLayout(arcType);
 				_chunk->properties->ListIndex = arcType->chunks->size();

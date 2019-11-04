@@ -48,6 +48,7 @@ void TestNew()
 
 int main()
 {
+
 	// SEntityManager::CreateEntity<CompTs...>();  return a valid entity.
 	// Need to do:
 	// 1. Entity manager: Create the entity. The entity value(index and generation).
@@ -60,25 +61,36 @@ int main()
 	//    (3) Place entity and create all components of template input in the chunk.		√
 	// 4. Finish construction and work with freeChunkList pointer, etc...					√
 	SWorld* world = new SWorld();
-	auto en0 = SWorld::CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(world);
-	auto en2 = SWorld::CreateEntity<Actor_Components>(world);
+	auto en0 = SWorld::CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(world); //0
+	auto en1 = SWorld::CreateEntity<ComponentA, ComponentD>(world);  
+	auto en2 = SWorld::CreateEntity<ComponentA>(world);
+	auto en3 = SWorld::CreateEntity<ComponentB>(world);
+	auto en4 = SWorld::CreateEntity<ComponentA, ComponentC, ComponentD>(world);
+	auto en5 = SWorld::CreateEntity<ComponentC>(world);
+	auto en6 = SWorld::CreateEntity<ComponentA, ComponentB>(world);                         //6
 
-	world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* compA, ComponentB* compB) {
-		std::cout << std::endl << compA->a << std::endl;
-		world->DestoryEntity(en0);
-		compA->a += 5;
-	});
 
-	double time = ::GetTickCount64();
-	for (int i = 0; i < 500000; i++)
+	SSystem* sys = new SSystem(world->GetArcheTypeManager(), world->GetEntityManager());
+
+	::Sleep(1000);
+	float time = ::GetTickCount();
+	for (int i = 0; i < 5000000; i++)
 	{
-		world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* compA, ComponentB* compB) {
-			compA += 5;
+		sys->Update();
+	}
+	float time2 = ::GetTickCount();
+	std::cout << time2 - time << std::endl;
+	
+	time = ::GetTickCount();
+	for (int i = 0; i < 5000000; i++)
+	{
+		world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
+			
 		});
 	}
-	double time2 = ::GetTickCount64();
+	time2 = ::GetTickCount();
 	std::cout << time2 - time << std::endl;
-
+	
 
 	//! DO NOT support multi component like this:
 	//SEntityManager::CreateEntity<ComponentA, ComponentA, ComponentA>();

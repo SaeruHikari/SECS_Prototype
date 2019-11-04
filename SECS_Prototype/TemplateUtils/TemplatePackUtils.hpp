@@ -80,32 +80,19 @@ private:
 	inline static void getHash_Internal(size_t _pos, size_t* _targ)
 	{
 		size_t _hash = typeid(T).hash_code();
-		if (_pos == 0)
-		{
-			_targ[_pos] = _hash;
-			return;
-		}
 		// do insert, hash small ~ big
-		for (int i = _pos - 1; i >= 0; i--)
+		int i = _pos - 2;
+		for (i; i >= 0 &_hash < _targ[i]; i--)
 		{
-			if (_hash < _targ[i])
-			{
-				_targ[i + 1] = _targ[i];
-				if (i == 0)
-					_targ[i] = _hash;
-			}
-			else
-			{
-				_targ[i + 1] = _hash;
-				break;
-			}
+			_targ[i + 1] = _targ[i];
 		}
+		_targ[i + 1] = _hash;
 	}
 	template<typename T, typename T2, typename ... __Ts>
 	inline static void getHash_Internal(size_t _len, size_t* _targ)
 	{
-		getHash_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 2, _targ);
-		getHash_Internal<T2, __Ts...>((sizeof...(__Ts) == 0) ? _len - 1 : _len, _targ);
+		getHash_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
+		getHash_Internal<T2, __Ts...>( _len, _targ);
 	}
 
 	template <typename T>

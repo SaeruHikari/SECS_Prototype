@@ -32,7 +32,6 @@ namespace SECS
 		inline int GetComponentIndex()
 		{
 			size_t _hash = typeid(T).hash_code();
-			size_t _hashB = typeid(ComponentB).hash_code();
 			for (size_t i = 0; i < ComponentNum; i++)
 			{
 #if defined(DEBUG_ARCHETYPE)
@@ -58,41 +57,17 @@ namespace SECS
 		inline void __init__Internal()
 		{
 			size_t _hash = typeid(__C).hash_code();
-			size_t sizeOf = sizeof(__C);
-			size_t componentOffset = ComponentTotalSize;
-			int i = 0;
-			if (ComponentNum == 0)
+			int i = ComponentNum - 1;
+			for (i; i >= 0 & _hash < typeHashes[i]; i--)
 			{
-				typeHashes[0] = _hash;
-				SizeOfs[0] = sizeOf;
-				ComponentOffsets[0] = componentOffset;
+				typeHashes[i + 1] = typeHashes[i];
+				SizeOfs[i+1] = SizeOfs[i];
+				ComponentOffsets[i+1] = ComponentOffsets[i];
 			}
-			else i = ComponentNum - 1;
-			for (i; i >= 0; i--)
-			{
-				if (_hash < typeHashes[i])
-				{
-					typeHashes[i + 1] = typeHashes[i];
-					SizeOfs[i+1] = SizeOfs[i];
-					ComponentOffsets[i+1] = ComponentOffsets[i];
-					if (i == 0)
-					{
-						typeHashes[i] = _hash;
-						SizeOfs[i] = sizeOf;
-						ComponentOffsets[i] = componentOffset;
-						i = 0;
-						break;
-					}
-				}
-				else
-				{
-					typeHashes[i + 1] = _hash;
-					SizeOfs[i + 1] = sizeOf;
-					ComponentOffsets[i + 1] = componentOffset;
-					i = i + 1;
-					break;
-				}
-			}
+			typeHashes[i + 1] = _hash;
+			SizeOfs[i+1] = sizeof(__C);
+			ComponentOffsets[i+1] = ComponentTotalSize;
+
 			ComponentNum += 1;
 			ComponentTotalSize += sizeof(__C);
 #if defined(DEBUG) || defined(_DEBUG)

@@ -45,7 +45,7 @@ namespace SECS
 
 		void** wrkptrs = nullptr;
 		void* entityWrkPtr = nullptr;
-		ChunkProperties* properties;
+		ChunkProperties* properties = nullptr;
 	public:
 		ChunkProperties* GetChunkProperty()
 		{
@@ -97,13 +97,8 @@ namespace SECS
 		// get comp ptr.
 		template<typename T>
 		inline T* __getCompPtr(size_t n)
-		{
-			if (n > properties->Count - properties->FreeUnits)
-			{
-				return nullptr;
-			}
-			int index = properties->ArcheType->GetComponentIndex<T>();
-			return ((T*)(comListPtrs[index])) + n;
+		{	
+			return ((T*)(comListPtrs[properties->ArcheType->GetComponentIndex<T>()])) + n;
 		}
 
 		// Returns false when the chunk is full.
@@ -129,9 +124,9 @@ namespace SECS
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "SChunk: Generate " << properties->Count << " Units" << std::endl;
 #endif
-			wrkptrs = new void* [arcType->ComponentNum];
-			comListPtrs = new void* [arcType->ComponentNum];
-			entityPtr = (unsigned char*)buff + sizeof(*properties);
+			wrkptrs = new void* [arcType->ComponentNum + 1];
+			comListPtrs = new void* [arcType->ComponentNum + 1];
+			entityPtr = (unsigned char*)buff + sizeof(ChunkProperties);
 			entityWrkPtr = entityPtr;
 			comListPtrs[0] = (unsigned char*)entityWrkPtr + properties->Count * arcType->EntitySize;
 			unsigned char* startptr = (unsigned char*)comListPtrs[0];
