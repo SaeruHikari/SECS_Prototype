@@ -42,7 +42,6 @@ namespace SECS
 			}
 			return -1;
 		}
-
 		// hash code version of GetComponentIndex<T>()
 		inline int GetComponentIndex(size_t _hash)
 		{
@@ -72,7 +71,7 @@ namespace SECS
 			ComponentTotalSize += sizeof(__C);
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "Current " << ComponentNum << " Objects in SArcheType " << "   " << typeid(__C).hash_code();
-			std::cout << typeid(__C).name() << ": \nSize: " << SizeOfs[i] << ", Offset: " << ComponentOffsets[i];
+			std::cout << typeid(__C).name() << ": \nSize: " << SizeOfs[i + 1] << ", Offset: " << ComponentOffsets[i + 1];
 			std::cout << ", Total Size: " << ComponentTotalSize << std::endl;
 #endif
 		}
@@ -92,18 +91,16 @@ namespace SECS
 			typeHashes = new size_t[sizeof...(Components)]();
 			ComponentOffsets = new size_t[sizeof...(Components)]();
 			SizeOfs = new size_t[sizeof...(Components)]();
-			EntitySize = sizeof(e);
+			EntitySize = sizeof(*e);
 			__init__Internal<Components...>();
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "End construct! " << typeid(*this).name() << std::endl << std::endl;
 #endif
 		}
-
 		SArcheType()
 		{
 
 		}
-
 		// Not implemented.
 		template<typename __C>
 		inline __C* __findInChunk(SChunk* __chunk)

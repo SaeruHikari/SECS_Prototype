@@ -24,7 +24,9 @@ namespace SECS
 			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
 #endif
 		}
-		int a = 5;
+		float x = 5;
+		float y = 5;
+		float z = 5;
 	};
 
 	struct ComponentB : public SComponent
@@ -82,9 +84,82 @@ namespace SECS
 			compC = new ComponentC();
 			compD = new ComponentD();
 		}
+		Actor(int I)
+			:ID(I)
+		{
+
+		}
+		int ID = 0;
 		ComponentA* compA;
 		ComponentB* compB;
 		ComponentC* compC;
 		ComponentD* compD;
+	};
+
+	struct ComponentE : public SComponent
+	{
+		ComponentE()
+		{
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+#endif
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+	};
+
+	struct ComponentF : public SComponent
+	{
+		ComponentF()
+		{
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+#endif
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+	};
+
+
+	struct ComponentG : public SComponent
+	{
+		ComponentG()
+		{
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+#endif
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+	};
+
+
+	struct ComponentH : public SComponent
+	{
+		ComponentH()
+		{
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+#endif
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
+	};
+
+	struct ComponentI : public SComponent
+	{
+		ComponentI()
+		{
+#if defined(DEBUG) || defined(_DEBUG)
+			std::cout << typeid(*this).name() << " Size: " << sizeof(*this) << std::endl;
+#endif
+		}
+		char c[4] = "WTF";
+		int i = 8;
+		std::string str;
 	};
 }

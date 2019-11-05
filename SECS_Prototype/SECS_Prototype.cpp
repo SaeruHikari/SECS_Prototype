@@ -1,5 +1,13 @@
 ﻿// SECS_Prototype.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
+#if defined(DEBUG) 
+#undef DEBUG
+#endif
+#if defined(_DEBUG) 
+#undef _DEBUG
+#endif
+
+#define _ITERATOR_DEBUG_LEVEL 0
 #include <iostream>
 #include <windows.h>
 #include "TemplateUtils/TemplateUtils.hpp"
@@ -9,41 +17,136 @@
 #include <synchapi.h>
 #include "Types/SWorld.hpp"
 
+
 using namespace std;
 using namespace SECS;
 
-
+SWorld* world;
+std::vector<Actor*> actors;
 void TestNew()
 {
 	::Sleep(1000);
 	double time3 = ::GetTickCount64();
-	for (int i = 0; i < 200000; i++)
+	//
+	for (int i = 0; i < 1000; i++)
 	{
-		void* ptr = malloc(4 * sizeof(Actor));
-		new(ptr) Actor();
-		ptr = (unsigned char*)ptr + sizeof(Actor);
-		new(ptr) Actor();
-		ptr = (unsigned char*)ptr + sizeof(Actor);
-		new(ptr) Actor();
-		ptr = (unsigned char*)ptr + sizeof(Actor);
-		new(ptr) Actor();
-		ptr = (unsigned char*)ptr + sizeof(Actor);
+		actors.push_back(new Actor());
+		actors.push_back(new Actor());
+		actors.push_back(new Actor());
+		actors.push_back(new Actor());
 	}
 	double time4 = ::GetTickCount64();
 	std::cout << time4 - time3 << std::endl;
 
-	SWorld* world = new SWorld();
-	double time = ::GetTickCount64();
-	for (int i = 0; i < 200000; i++)
+	for (int i = 0; i < 1000; i++)
 	{
-		SWorld::CreateEntity<ComponentA, ComponentB, ComponentD>(world);
-		SWorld::CreateEntity<ComponentA, ComponentB, ComponentD>(world);
-		SWorld::CreateEntity<ComponentA, ComponentB, ComponentD>(world);
-		SWorld::CreateEntity<ComponentA, ComponentB, ComponentD>(world);
+		actors.push_back(new Actor());
+	}
+
+	for (int i = 0; i < 2000; i++)
+	{
+		actors.push_back(new Actor(1));
+		actors.push_back(new Actor(2));
+		actors.push_back(new Actor(3));
+		actors.push_back(new Actor(4));
+		actors.push_back(new Actor(5));
+		actors.push_back(new Actor(6));
+		actors.push_back(new Actor(7));
+		actors.push_back(new Actor(8));
+		actors.push_back(new Actor(9));
+		actors.push_back(new Actor(10));
+		actors.push_back(new Actor(11));
+		actors.push_back(new Actor(12));
+		actors.push_back(new Actor(13));
+		actors.push_back(new Actor(14));
+		actors.push_back(new Actor(15));
+	}
+
+
+	double time = ::GetTickCount64();
+	//29000 + 4000 (5000 ava) 16types
+	for (int i = 0; i < 1000; i++)
+	{
+		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>();
+		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>();
+		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>();
+		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>();
 		//SEntityManager::CreateEntity<float>();
 	}
 	double time2 = ::GetTickCount64();
+	std::cout << time2 - time << std::endl << std::endl;
+}
+
+void TestDestory()
+{
+	double time = ::GetTickCount64();
+	//29000 + 4000 (5000 ava) 16types
+	for (int i = 0, j = 0; i < 4000; j++)
+	{
+		if (actors[i]->ID == 0)
+		{
+			delete[] actors[i];
+			i++;
+		}	
+	}
+	double time2 = ::GetTickCount64();
+	std::cout << time2 - time << std::endl << std::endl;
+
+	time = ::GetTickCount64();
+	//29000 + 4000 (5000 ava) 16types
+	static int ii = 0;
+	world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
+		world->DestoryEntity(entity);
+		});
+
+	time2 = ::GetTickCount64();
+	std::cout << std::endl << time2 - time << std::endl << std::endl;
+}
+
+void TestIterate()
+{
+	SSystem* sys = new SSystem();
+
+	::Sleep(1000);
+	float time = ::GetTickCount64();
+	for (int i = 0; i < 1000; i++)
+	{
+		for (int j = 0; j < actors.size(); j++)
+		{
+			if (actors[j]->ID != 0) continue;
+			actors[j]->compA->x += 5;
+			actors[j]->compA->y += 5;
+			actors[j]->compA->z += 5;
+		}
+	}
+	float time2 = ::GetTickCount64();
 	std::cout << time2 - time << std::endl;
+
+	::Sleep(1000);
+	time = ::GetTickCount64();
+	for (int i = 0; i < 1000; i++)
+	{
+		world->TickSystemGroups();
+	}
+	 time2 = ::GetTickCount64();
+	std::cout << time2 - time << std::endl;
+	auto timea = time2 - time;
+
+	
+	::Sleep(1000);
+	time = ::GetTickCount64();
+	static int j = 0;
+	for (int i = 0; i < 1000; i++)
+	{
+		world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
+			a->x += 5;
+			a->y += 5;
+			a->z += 5;
+		});
+	}
+	time2 = ::GetTickCount64();
+	std::cout << time2 - time << std::endl;
+	std::cout << timea/(time2 - time) << std::endl;
 }
 
 int main()
@@ -60,37 +163,49 @@ int main()
 	//    (2) If not, create a new chunk list.												√	
 	//    (3) Place entity and create all components of template input in the chunk.		√
 	// 4. Finish construction and work with freeChunkList pointer, etc...					√
-	SWorld* world = new SWorld();
-	auto en0 = SWorld::CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(world); //0
-	auto en1 = SWorld::CreateEntity<ComponentA, ComponentD>(world);  
-	auto en2 = SWorld::CreateEntity<ComponentA>(world);
-	auto en3 = SWorld::CreateEntity<ComponentB>(world);
-	auto en4 = SWorld::CreateEntity<ComponentA, ComponentC, ComponentD>(world);
-	auto en5 = SWorld::CreateEntity<ComponentC>(world);
-	auto en6 = SWorld::CreateEntity<ComponentA, ComponentB>(world);                         //6
+	world = SWorld::CreateSWorld("TestWorld");
+
+	TestNew();
+
+	for(int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(); //0
+	for (int i = 0; i < 5000; i++)
+		auto en1 = world->CreateEntity<ComponentA, ComponentD>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentA, double>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentB>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<char, double, std::string, int>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentA, ComponentC, ComponentD>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentC>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<char>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<double>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentD>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentE>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentF>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentG>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentH>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentI>();
+	for (int i = 0; i < 1000; i++)
+		world->CreateEntity<ComponentB, ComponentB, int>();                         //6
 
 
-	SSystem* sys = new SSystem(world->GetArcheTypeManager(), world->GetEntityManager());
+	world->AddSystemGroup("TestGroup");
 
-	::Sleep(1000);
-	float time = ::GetTickCount();
-	for (int i = 0; i < 5000000; i++)
-	{
-		sys->Update();
-	}
-	float time2 = ::GetTickCount();
-	std::cout << time2 - time << std::endl;
-	
-	time = ::GetTickCount();
-	for (int i = 0; i < 5000000; i++)
-	{
-		world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
-			
-		});
-	}
-	time2 = ::GetTickCount();
-	std::cout << time2 - time << std::endl;
-	
+	TestIterate();
+
+	//TestDestory();
 
 	//! DO NOT support multi component like this:
 	//SEntityManager::CreateEntity<ComponentA, ComponentA, ComponentA>();

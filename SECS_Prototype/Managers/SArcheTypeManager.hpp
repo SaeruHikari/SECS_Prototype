@@ -17,19 +17,7 @@ namespace SECS
 		friend class SEntityManager;
 		friend class SWorld;
 		friend class SSystem;
-	private:
-		static SArcheTypeManager* Get()
-		{
-			if (_this == nullptr)
-			{
-				_this = new SArcheTypeManager();
-			}
-			return _this;
-		}
 	protected:
-		// members.
-		// this
-		static SArcheTypeManager* _this;
 		// ArcheType Map: <compcount, ArchetypeList>
 		std::unordered_map<size_t, SArcheTypeList> m_TypeLookup;
 
@@ -49,10 +37,7 @@ namespace SECS
 				size_t FocusHash = 0;
 				for (int i = 0; i < _pair->second.size(); i++)
 				{
-					if (_pair->second[i]->typeHashes[0] > InHashes[0])
-					{
-						continue;
-					}
+					if (_pair->second[i]->typeHashes[0] > InHashes[0]) continue;
 					for (int j = 0; j < _pair->second[i]->ComponentNum; j++)
 					{
 						if (_pair->second[i]->typeHashes[j] == InHashes[FocusHash])
@@ -104,8 +89,10 @@ namespace SECS
 				for (auto* e : m_TypeLookup[compCount])
 				{
 					if (TemplatePackUtils::match<Cs...>(e->typeHashes, e->ComponentNum))
+					{
 						_archetype = e;
-					return _archetype;
+						return _archetype;
+					}
 				}
 			}
 			return nullptr;
@@ -158,9 +145,7 @@ namespace SECS
 	protected:
 		SArcheTypeManager()
 		{
-			assert(_this == nullptr);
+		
 		}
-
 	};
-	SArcheTypeManager* SArcheTypeManager::_this = nullptr;
 }

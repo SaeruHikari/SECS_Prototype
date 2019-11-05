@@ -28,23 +28,12 @@ namespace SECS
 			int generation = -1;
 		};
 
-		static SEntityManager* _this;
 		std::vector<SEntityData> m_EntityData;
 		std::vector<SEntity> m_Entities;
 
 	private:
-		inline static SEntityManager* Get()
-		{
-			if (_this == nullptr)
-			{
-				_this = new SEntityManager();
-				return _this;
-			}
-			else return _this;
-		}
-
 		template<typename ... Components>
-		inline SEntity CreateEntity(SArcheTypeManager* arMng)
+		inline SEntity CreateEntity(SArcheTypeManager* arMng) noexcept
 		{
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << std::endl << "Start Create new entity: " << std::endl;
@@ -79,33 +68,58 @@ namespace SECS
 		}
 
 		// Returns false when the entity is not found.
-		inline bool DestoryEntity(SEntity entity)
+		inline bool DestoryEntity(SEntity& entity)
 		{
-			if (m_EntityData.size() <= entity.Index) return false;
-			if (!IsEntityAlive(entity)) return false;
+			/*
+			if (m_EntityData.size() <= entity.Index) 
+				return false;
+			if (!IsEntityAlive(entity)) 
+				return false;
+			// Check if free chunk is empty. If so free it.
+			if (m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk->properties->Count
+				== m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk->properties->FreeUnits)
+			{
+				m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->pop_back();
+				delete m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk;
+				if (m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->size() == 0)
+					m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk = nullptr;
+				else m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk
+					= (*m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks)[m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->size() - 1];		
+			}
+			
+			// kill entity.Index    move last
+			m_EntityData[entity.Index].Chunk->__moveLastEntityComponentFrom(
+				m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk,
+				m_EntityData[entity.Index].IndexInChunk);
+		    
+			*/
 			m_EntityData[entity.Index].generation += 1;
-		
 			return true;
 		}
 
 		// Check if an entity is alive.
-		inline bool IsEntityAlive(SEntity entity)
+		inline bool IsEntityAlive(const SEntity& entity)
 		{
-			if (m_EntityData.size() <= entity.Index) return false;
-			return m_EntityData[entity.Index].generation == entity.generation;
+			if (m_EntityData.size() <= entity.Index) 
+				return false;
+			return (m_EntityData[entity.Index].generation == entity.generation);
+		}
+
+		template<typename T>
+		inline T* FindComponent(const SEntity& entity)
+		{
+			if (!IsEntityAlive(entity)) return nullptr;
+			else return m_EntityData[entity.Index].Chunk->__getCompPtr<T>(m_EntityData[entity.Index].IndexInChunk);
 		}
 
 		template<typename ... Cs>
-		inline void Each(std::function<void(SEntity, Cs *...)> func, const SArcheTypeList& arclist)
+		inline void Each(std::function<void(SEntity, Cs *...)> func, const SArcheTypeList& arclist) noexcept
 		{
-			for (auto _type : arclist)
+			for (int i = 0; i < arclist.size(); i++)
 			{
-				for (auto _chunk : *_type->chunks)
+				for (int j = 0; j < arclist[i]->chunks->size(); j++)
 				{
-					// Batch func call for better performance.
-					// -----------------------------
-
-					// !
+					SChunk* _chunk = (*arclist[i]->chunks)[j];
 					for (int i = 0; i < _chunk->properties->Count - _chunk->properties->FreeUnits; i++)
 					{
 						SEntity entity = *_chunk->__getEntityPtr<SEntity>(i);
@@ -116,20 +130,16 @@ namespace SECS
 					}
 				}
 			}
-			// Only iterate alive entities.
 		}
 
 		template<typename T, typename ... Cs>
-		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, const SArcheTypeList& arclist)
+		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, const SArcheTypeList& arclist) noexcept
 		{
-			for (auto _type : arclist)
+			for (int i = 0; i < arclist.size(); i++)
 			{
-				for (auto _chunk : *_type->chunks)
+				for (int j = 0; j < arclist[i]->chunks->size(); j++)
 				{
-					// Batch func call for better performance.
-					// -----------------------------
-
-					// !
+					SChunk* _chunk = (*arclist[i]->chunks)[j];
 					for (int i = 0; i < _chunk->properties->Count - _chunk->properties->FreeUnits; i++)
 					{
 						SEntity entity = *_chunk->__getEntityPtr<SEntity>(i);
@@ -145,18 +155,18 @@ namespace SECS
 
 
 		template<typename ... Cs>
-		inline void Each(std::function<void(SEntity, Cs*...)> func, SArcheTypeManager* arMng)
+		inline void Each(std::function<void(SEntity, Cs*...)> func, SArcheTypeManager* arMng) noexcept
 		{
 			// Deal with arclist.
 			Each<Cs...>(func, arMng->CompsGetArcheTypes<Cs...>());
 		}
 
 		template<typename T, typename ... Cs>
-		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, SArcheTypeManager arMng)
+		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, SArcheTypeManager arMng) noexcept
 		{
 			// Deal with arclist.
 			Each<T, Cs...>(func, caller, arMng->CompsGetArcheTypes<Cs...>());
 		}
 	};
-	SEntityManager* SEntityManager::_this = nullptr;
+
 }

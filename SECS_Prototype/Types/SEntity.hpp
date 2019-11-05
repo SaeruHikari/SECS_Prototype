@@ -10,6 +10,7 @@ namespace SECS
 		// Only entity manager can set Index and version value.
 		friend class SEntityManager;
 		friend class SWorld;
+		friend class SChunk;
 	public:
 		inline size_t GetIndex()
 		{
@@ -28,7 +29,7 @@ namespace SECS
 		// Index of SEntity
 		SWorld* world = nullptr;
 	    size_t Index = -1;
-		size_t generation = -1;
+		int generation = -1;
 	};
 }
 
