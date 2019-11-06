@@ -15,6 +15,8 @@ namespace SECS
 		friend class SEntityManager;
 		friend class SArcheTypeManager;
 		friend struct SChunk;
+		friend struct ComponentSystemData;
+		friend class SSystem;
 	protected:
 		int ComponentNum = 0;
 		size_t EntitySize = 0;
@@ -27,60 +29,124 @@ namespace SECS
 		SChunkList* chunks = nullptr;
 		SChunk* freeChunk = nullptr;
 	public:
-		template<typename... Ts>
-		inline SArcheType Expand()
+		SArcheType(size_t _EntitySize, size_t _ComponentTotalSize, size_t _ComponentNum)
+			:EntitySize(_EntitySize), ComponentTotalSize(_ComponentTotalSize), ComponentNum(_ComponentNum)
 		{
-			size_t* _hashes = TemplatePackUtils::GetHashes<Ts...>();
-			size_t* _sizes = TemplatePackUtils::TemplatePack_TSizes<Ts...>();
-			return std::move(Expand(_hashes, sizeof...(Ts), _sizes));
+			chunks = nullptr;
+			freeChunk = nullptr;
+			typeHashes = new size_t[ComponentNum]();
+			SizeOfs = new size_t[ComponentNum]();
+			ComponentOffsets = new size_t[ComponentNum]();
 		}
-		inline SArcheType Expand(size_t* _InHash, int _HashLength, size_t* _EntitySizes)
+		SArcheType(SArcheType&& arc) = default;
+
+		template<typename ... Ts>
+		inline SArcheType Shrink()
+		{
+			size_t* _hashes = TemplatePackUtils::GetHashes_Torder<Ts...>();
+			size_t* _sizes = TemplatePackUtils::TemplatePack_TSizes<Ts...>();
+			return Shrink(_hashes, sizeof...(Ts), _sizes);
+		}
+
+		template<typename ... Ts>
+		inline SArcheType Expand() noexcept
+		{
+			size_t* _hashes = TemplatePackUtils::GetHashes_Torder<Ts...>();
+			size_t* _sizes = TemplatePackUtils::TemplatePack_TSizes<Ts...>();
+			return Expand(_hashes, sizeof...(Ts), _sizes);
+		}
+
+		//inline SArcheType Shrink(size_t* _InHash, int _HashLength, size_t* _ComponentSizes)
+		//{
+			
+		//}
+
+		inline SArcheType Expand(size_t* _InHash, int _HashLength, size_t* _ComponentSizes) noexcept
 		{
 			assert(_HashLength > 0);
-			SArcheType _newArche = *this;
-			_newArche.chunks = nullptr;
-
-			_newArche.ComponentTotalSize += EntitySize;
-			_newArche.freeChunk = nullptr;
+			SArcheType _newArche = SArcheType(EntitySize, ComponentTotalSize, ComponentNum + _HashLength);
+			memcpy(_newArche.typeHashes, typeHashes, ComponentNum * sizeof(size_t));
+			memcpy(_newArche.SizeOfs, SizeOfs, ComponentNum * sizeof(size_t));
 			// insert 
 			_HashLength--;
-			int i;
+			int i = _newArche.ComponentNum - _HashLength - 2;
 			for (_HashLength; _HashLength >= 0; _HashLength--)
 			{
-				for (i = ComponentNum - 1; i >= 0 && _newArche.typeHashes[i] > _InHash[_HashLength]; i--)
+				for (i = _newArche.ComponentNum - _HashLength - 2; i >= 0 && _newArche.typeHashes[i] > _InHash[_HashLength]; i--)
 				{
 					_newArche.typeHashes[i + 1] = _newArche.typeHashes[i];
 					_newArche.SizeOfs[i + 1] = _newArche.SizeOfs[i];
 				}
 				_newArche.typeHashes[i + 1] = _InHash[_HashLength];
-				_newArche.SizeOfs[i + 1] = _EntitySizes[_HashLength];
-				
+				_newArche.SizeOfs[i + 1] = _ComponentSizes[_HashLength];
 				// Insert finish, comp num++
-				_newArche.ComponentNum += 1;
+				_newArche.ComponentTotalSize += _ComponentSizes[_HashLength];
 			}
 			// Recompute offsets
 			_newArche.ComponentOffsets[0] = 0;
-			for (i = 1; i < ComponentNum; i++)
+			for (i = 1; i < _newArche.ComponentNum; i++)
 			{
 				_newArche.ComponentOffsets[i] = _newArche.ComponentOffsets[i - 1] + _newArche.SizeOfs[i - 1];
 			}
 			// return moved
-			return std::move(_newArche);
+			return _newArche;
 		}
 	public:
-		inline bool Is(size_t num, size_t* _typeHashes)
+		inline bool Is(size_t _num, size_t* _typeHashes)
 		{
-			if (num != this->ComponentNum) return false;
-			while (num > 0)
+			if (_num != this->ComponentNum) return false;
+			while (_num > 0)
 			{
-				num--;
-				if (typeHashes[num] != _typeHashes[num]) return false;	
+				_num--;
+				if (typeHashes[_num] != _typeHashes[_num]) return false;
 			}
 			return true;
 		}
-		inline bool Is(SArcheType* _arc)
+		inline bool Is(const SArcheType* _arc)
 		{
 			return Is(_arc->ComponentNum, _arc->typeHashes);
+		}
+		inline bool Includes(size_t _num, size_t* _typehashes)
+		{
+			if (_num > ComponentNum || typeHashes[0] > _typehashes[0])
+				return false;
+			size_t FocusHash = 0;
+			for (int i = 0; i < ComponentNum; i++)
+			{
+				if (typeHashes[i] == _typehashes[FocusHash]) FocusHash += 1;
+				// All match, return true
+				if (FocusHash == _num)
+					return true;
+				if(typeHashes[i] > _typehashes[_num - 1])
+					return false;
+			}
+			return false;
+		}
+		inline bool Includes(SArcheType* _arc)
+		{
+			return Includes(_arc->ComponentNum, _arc->typeHashes);
+		}
+
+		inline bool Included(size_t _num, size_t* _typehashes)
+		{
+			if (ComponentNum > _num || typeHashes[0] < _typehashes[0])
+				return false;
+			size_t FocusHash = 0;
+			for (int i = 0; i < _num; i++)
+			{
+				if (_typehashes[i] == typeHashes[FocusHash]) FocusHash += 1;
+				// All match, return true
+				if (FocusHash == ComponentNum)
+					return true;
+				if (_typehashes[i] > typeHashes[_num - 1])
+					return false;
+			}
+			return false;
+		}
+
+		inline bool Included(SArcheType* _arc)
+		{
+			return _arc->Includes(this);
 		}
 	public:
 		// Returns -1 when not such component found.
@@ -117,11 +183,9 @@ namespace SECS
 			{
 				typeHashes[i + 1] = typeHashes[i];
 				SizeOfs[i+1] = SizeOfs[i];
-				ComponentOffsets[i+1] = ComponentOffsets[i];
 			}
 			typeHashes[i + 1] = _hash;
 			SizeOfs[i+1] = sizeof(__C);
-			ComponentOffsets[i+1] = ComponentTotalSize;
 
 			ComponentNum += 1;
 			ComponentTotalSize += sizeof(__C);
@@ -149,6 +213,12 @@ namespace SECS
 			SizeOfs = new size_t[sizeof...(Components)]();
 			EntitySize = sizeof(*e);
 			__init__Internal<Components...>();
+
+			ComponentOffsets[0] = 0;
+			for (size_t i = 1; i < ComponentNum; i++)
+			{
+				ComponentOffsets[i] = ComponentOffsets[i - 1] + SizeOfs[i - 1];
+			}
 #if defined(DEBUG) || defined(_DEBUG) 
 			std::cout << "End construct! " << typeid(*this).name() << std::endl << std::endl;
 #endif
@@ -174,6 +244,8 @@ namespace SECS
 		friend std::ostream& operator <<(std::ostream& out, const SArcheType& ar)
 		{
 			out << "ArcheType Component Num: " << ar.ComponentNum << std::endl;
+			for (int i = 0; i < ar.ComponentNum; i++)
+				out << "ArcheType Component SizeOfs: " << *(ar.SizeOfs + i) << std::endl;
 			out << "ArcheType Component Total Size: " << ar.ComponentTotalSize << std::endl;
 			for (int i = 0; i < ar.ComponentNum; i++)
 				out << "ArcheType Component typeHash: " << *(ar.typeHashes + i) << "  " << std::endl;

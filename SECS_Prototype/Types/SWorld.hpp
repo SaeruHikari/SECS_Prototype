@@ -9,6 +9,7 @@ namespace SECS
 {
 	class SWorld
 	{
+		friend SSystemGroup;
 	public:
 		SWorld() {};
 		SWorld(std::string _Name)
@@ -87,6 +88,7 @@ namespace SECS
 			ActiveSystemsLists.push_back(sys);
 		}
 
+
 		inline bool AddSystemGroup(std::string SystemGroupName)
 		{
 			 SSystemList* listPtr= SSystemGroup::GetSystemGroupList(SystemGroupName);
@@ -94,7 +96,7 @@ namespace SECS
 			 if (listPtr == nullptr) std::cout << "System group trying to load do NOT EXIST." << std::endl;
 #endif
 			 if (listPtr == nullptr) return false;
-			 ActiveSystemsLists.push_back(*listPtr);
+			 SystemGroups.push_back(SystemGroupName);
 #if defined(DEBUG) || defined(_DEBUG)
 			 std::cout << "World " << Name << " added system group: " << SystemGroupName << " into tick group!" << std::endl;
 #endif
@@ -108,11 +110,11 @@ namespace SECS
 		// Tick function, merge it into your message loop.
 		inline void TickSystemGroups()
 		{
-			for (int i = 0; i < ActiveSystemsLists.size(); i++)
+			for (int i = 0; i < SystemGroups.size(); i++)
 			{
-				for (int j = 0; j < ActiveSystemsLists[i].size(); j++)
+				for (int j = 0; j < SSystemGroup::SystemGroups[SystemGroups[i]].size(); j++)
 				{
-					ActiveSystemsLists[i][j]->Update(EntityManager);
+					SSystemGroup::SystemGroups[SystemGroups[i]][j]->Update(EntityManager);
 				}
 			}
 		}
@@ -128,8 +130,7 @@ namespace SECS
 		std::string Name;
 		SArcheTypeManager* ArcheTypeManager = nullptr;
 		SEntityManager* EntityManager = nullptr;
-		std::vector<SSystemList> ActiveSystemsLists;
-		std::vector<SSystemList> DeactiveSystemsLists;
+		std::vector<std::string> SystemGroups;
 	};
 	std::unordered_map<std::string, SWorld*> SWorld::Worlds = SWorld::__InitWorldMap();
 }

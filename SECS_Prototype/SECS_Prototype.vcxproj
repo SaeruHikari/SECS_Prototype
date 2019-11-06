@@ -156,6 +156,9 @@
     <ClCompile Include="SECS_Prototype.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandList\SCommand.hpp" />
+    <ClInclude Include="CommandList\SCommandMachine.hpp" />
+    <ClInclude Include="CommandList\SCommandList.hpp" />
     <ClInclude Include="Managers\SArcheTypeManager.hpp" />
     <ClInclude Include="TemplateUtils\TemplateUtils.hpp" />
     <ClInclude Include="Types\Containers\SArcheTypeList.hpp" />

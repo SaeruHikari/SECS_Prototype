@@ -125,7 +125,7 @@ namespace SECS
 
 		inline bool __moveLastEntityComponentFrom(SChunk* _src, size_t _indexTo) noexcept
 		{
-			__moveEntityComponentFrom(_src, _indexTo, _src->properties->Count - _src->properties->FreeUnits - 1);
+			return __moveEntityComponentFrom(_src, _indexTo, _src->properties->Count - _src->properties->FreeUnits - 1);
 		}
 
 		// unsafe, will cover current entity component instance.
@@ -135,22 +135,26 @@ namespace SECS
 			// precheck
 			if (_src == this && _indexTo == properties->Count - properties->FreeUnits - 1) 
 				return true;
-			if ((_src->properties->ArcheType != properties->ArcheType))
+			// start loop component move
+			uint16_t dstI = 0;
+			uint16_t srcI = 0;
+			SArcheType* dstType = properties->ArcheType;
+			SArcheType* srcType = _src->properties->ArcheType;
+			memcpy((unsigned char*)__getEntityPtr(_indexTo), (unsigned char*)_src->__getEntityPtr(_indexFrom), dstType->EntitySize);
+			while (srcI < srcType->ComponentNum && dstI < dstType->ComponentNum)
 			{
-
+				auto st = srcType->typeHashes[srcI];
+				auto dt = dstType->typeHashes[dstI];
+				unsigned char* s = (unsigned char*)_src->__unsafeGetCompPtr(srcI, _indexFrom);
+				unsigned char* d = (unsigned char*)__unsafeGetCompPtr(dstI, _indexTo);
+				if (st < dt) srcI++; // delete source comp(do nothing)
+				else if (st > dt) //construct(set 0)
+					memset(d, 0, dstType->SizeOfs[dstI++]);
+				else //move
+					memcpy(d, s, dstType->SizeOfs[(srcI++, dstI++)]);
 			}
-			else
-			{
-				// move
-				memcpy(__getEntityPtr(_indexTo), _src->__getEntityPtr(_indexFrom), properties->ArcheType->EntitySize);
-				// mask src
-				_src->__getEntityPtr(_indexFrom)->generation = -1;
-				for (int i = 0; i < properties->ArcheType->ComponentNum; i++)
-				{
-					memcpy(__unsafeGetCompPtr(i, _indexTo), _src->__unsafeGetCompPtr(i, _indexFrom), properties->ArcheType->SizeOfs[i]);
-				}
-				_src->__clearEntityComponentLast();
-			}
+			// No conclusion of Destroying.
+			//_src->__clearEntityComponentLast();
 			return true;
 		}
 

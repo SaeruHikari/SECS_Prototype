@@ -17,6 +17,6 @@ namespace SECS
 		}
 
 	};
-	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, SECSDefautGroup1);
+	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, SECSDefaultGroup1);
 
 }

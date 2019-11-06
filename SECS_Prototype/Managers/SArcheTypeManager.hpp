@@ -79,7 +79,7 @@ namespace SECS
 		}
 
 		template<typename ... Cs>
-		inline SArcheType* GetExistingArcheType(SEntity* e)
+		inline SArcheType* GetExistingArcheType(SEntity* e) noexcept
 		{
 			SArcheType* _archetype = nullptr;
 			size_t compCount = sizeof...(Cs);
@@ -96,6 +96,28 @@ namespace SECS
 				}
 			}
 			return nullptr;
+		}
+
+		inline SArcheType* ArchetypeRegisted(const SArcheType* _arc)
+		{
+			if (m_TypeLookup.find(_arc->ComponentNum) != m_TypeLookup.end())
+			{
+				// Match
+				for (auto* e : m_TypeLookup[_arc->ComponentNum])
+				{
+					if (e->Is(_arc))
+					{
+						return e;
+					}
+				}
+			}
+			return nullptr;
+		}
+
+		inline SArcheType* RegistArchetype(SArcheType* _arc)
+		{
+			m_TypeLookup[_arc->ComponentNum].push_back(_arc);
+			return _arc;
 		}
 
 		template<typename ... Cs>

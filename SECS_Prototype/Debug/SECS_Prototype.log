@@ -1,84 +1,91 @@
 ﻿  SECS_Prototype.cpp
-D:\SECS_Prototype\SECS_Prototype\Types\Containers\SChunkList.hpp(11,15): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
-D:\SECS_Prototype\SECS_Prototype\Types\SEntity.hpp(13): message : 参见“SECS::SChunk”的声明
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(11,15): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
-D:\SECS_Prototype\SECS_Prototype\Types\Containers\SChunkList.hpp(11): message : 参见“SECS::SChunk”的声明
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(17,23): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(11): message : 参见“SECS::SChunk”的声明
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(104,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(21,2): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(20): message : 参见“SECS::SChunk”的声明
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(163,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(187,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(101,23): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(111,22): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(113,23): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(29,15): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(38,15): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(66,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(76,15): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(82,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(92,15): warning C4244: “初始化”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(95,25): warning C4244: “=”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(101,26): warning C4244: “=”: 从“ULONGLONG”转换到“double”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(119,13): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(122,21): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(130,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(134,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(139,27): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(145,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(154,26): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(149,22): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         with
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         [
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :             T=SECS::SDebugSystem
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         ]
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(117): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”时
-D:\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的 类 模板 实例化“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(151,23): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(154,24): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(38,23): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(110): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheTypeList SECS::SArcheTypeManager::CompsGetArcheTypes<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(109): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__collectInfos_Internal(SECS::SEntityManager *,SECS::SArcheTypeManager *)”时
-D:\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__collectInfos_Internal(SECS::SEntityManager *,SECS::SArcheTypeManager *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(130,22): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(171): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,const SECS::SArcheTypeList &) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(49): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,SECS::SArcheTypeManager *) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(100): message : 查看对正在编译的函数 模板 实例化“void SECS::SWorld::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(132,23): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(135,24): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(91,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message : 查看对正在编译的函数 模板 实例化“int SECS::SArcheType::GetComponentIndex<T>(void)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         with
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         [
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :             T=SECS::ComponentA
-D:\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         ]
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message : 查看对正在编译的函数 模板 实例化“T *SECS::SChunk::__getCompPtr<SECS::ComponentA>(size_t) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         with
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         [
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :             T=SECS::ComponentA
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         ]
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         with
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         [
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :             T=SECS::SDebugSystem
-D:\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         ]
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(84,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(93): message : 查看对正在编译的函数 模板 实例化“void TemplatePackUtils::getHash_Internal<T>(size_t,size_t *)”的引用
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(93): message :         with
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(93): message :         [
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(93): message :             T=SECS::ComponentB
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(93): message :         ]
-D:\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(32): message : 查看对正在编译的函数 模板 实例化“void TemplatePackUtils::getHash_Internal<SECS::ComponentB,SECS::ComponentD,>(size_t,size_t *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(33): message : 查看对正在编译的函数 模板 实例化“size_t *TemplatePackUtils::GetHashes<SECS::ComponentB,SECS::ComponentD>(void)”的引用
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(217): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType SECS::SArcheType::Expand<SECS::ComponentB,SECS::ComponentD>(void)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(116,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
-D:\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(151): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::__init__Internal<SECS::ComponentB>(void)”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(105): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::Init<SECS::ComponentB>(SECS::SEntity *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(77): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::CreateArcheType<SECS::ComponentB>(SECS::SEntity *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(53): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::GetArcheType<SECS::ComponentB>(SECS::SEntity *)”的引用
-D:\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(41): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::CreateEntity<SECS::ComponentB>(SECS::SArcheTypeManager *) noexcept”的引用
-D:\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(185): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SWorld::CreateEntity<SECS::ComponentB>(void)”的引用
-  SECS_Prototype.vcxproj -> D:\SECS_Prototype\Debug\SECS_Prototype.exe
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\Containers\SChunkList.hpp(11,15): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SEntity.hpp(13): message : 参见“SECS::SChunk”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(11,15): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\Containers\SChunkList.hpp(11): message : 参见“SECS::SChunk”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(17,23): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(11): message : 参见“SECS::SChunk”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(108,13): warning C4018: “>”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(145,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(21,2): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(20): message : 参见“SECS::SChunk”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(163,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(187,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(101,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(111,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(113,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(29,13): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(30,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(32,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(37,26): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(48,13): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(49,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(52,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(57,27): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(63,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(72,26): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(149,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(117): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”时
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的 类 模板 实例化“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(151,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(154,24): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(38,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(110): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheTypeList SECS::SArcheTypeManager::CompsGetArcheTypes<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(109): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__collectInfos_Internal(SECS::SEntityManager *,SECS::SArcheTypeManager *)”时
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__collectInfos_Internal(SECS::SEntityManager *,SECS::SArcheTypeManager *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(130,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(171): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,const SECS::SArcheTypeList &) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(49): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>,SECS::SArcheTypeManager *) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(36): message : 查看对正在编译的函数 模板 实例化“void SECS::SWorld::Each<SECS::ComponentA,SECS::ComponentB>(std::function<void (SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *)>) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(132,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(135,24): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(132,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message : 查看对正在编译的函数 模板 实例化“int SECS::SArcheType::GetComponentIndex<T>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message : 查看对正在编译的函数 模板 实例化“T *SECS::SChunk::__getCompPtr<SECS::ComponentA>(size_t) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(158): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(118): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(118,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message : 查看对正在编译的函数 模板 实例化“void TemplatePackUtils::getHash_Internal<T>(size_t,size_t *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(40): message : 查看对正在编译的函数 模板 实例化“void TemplatePackUtils::getHash_Internal<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(size_t,size_t *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(106): message : 查看对正在编译的函数 模板 实例化“size_t *TemplatePackUtils::GetHashes<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(103): message : 在编译 类 模板 成员函数“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::ComponentSystemData(T *,void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *))”时
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(103): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(103): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(103): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(103): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::ComponentSystemData(T *,void (__thiscall SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *))”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(193,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(105): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::Init<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SEntity *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(77): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::CreateArcheType<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SEntity *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(53): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::GetArcheType<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SEntity *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(41): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SArcheTypeManager *) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(95): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SWorld::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(157,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(190): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::__init__Internal<SECS::ComponentB>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(105): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::Init<SECS::ComponentB>(SECS::SEntity *)”的引用
+  SECS_Prototype.vcxproj -> D:\Coding\SECS_Prototype\Debug\SECS_Prototype.exe

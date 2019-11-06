@@ -32,12 +32,6 @@ namespace SECS
 		std::vector<SEntity> m_Entities;
 
 	private:
-		template<typename C>
-		inline SEntity AddComponent(SEntity& entity)
-		{
-
-		}
-
 		template<typename ... Components>
 		inline SEntity CreateEntity(SArcheTypeManager* arMng) noexcept
 		{
@@ -76,7 +70,7 @@ namespace SECS
 		// Returns false when the entity is not found.
 		inline bool DestoryEntity(SEntity& entity) 
 		{
-			/*
+			
 			if (m_EntityData.size() <= entity.Index) 
 				return false;
 			if (!IsEntityAlive(entity)) 
@@ -98,7 +92,7 @@ namespace SECS
 				m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk,
 				m_EntityData[entity.Index].IndexInChunk);
 		    
-			*/
+			
 			m_EntityData[entity.Index].generation += 1;
 			return true;
 		}
@@ -123,7 +117,34 @@ namespace SECS
 			if (!IsEntityAlive(entity)) return nullptr;
 			else return m_EntityData[entity.Index].Chunk->properties->ArcheType;
 		}
+	public:
+		// Add components to a entity.
+		// If no existed archetype for the new combination,
+		// a new one will be created.
+		template<typename ... Cs>
+		inline SEntity AddComponent(SEntity& entity, SArcheTypeManager* arMng)
+		{
+			// Expand a new archetype.
+			SArcheType _ExpandArc = FindArcheType(entity)->Expand<Cs...>();
+			SArcheType* _regist = arMng->ArchetypeRegisted(&_ExpandArc);
+			// Not found
+			// Regist New Archetype
+			if(_regist == nullptr)
+			{
+				_regist = new SArcheType(std::move(_ExpandArc));
+				arMng->RegistArchetype(_regist);
+			}
+			// Get or create new chunk.
+			SChunk* _chunk = arMng->GetFreeSChunk(_regist);
+			// 1. move and destory old:
 
+			// 2. copy old entity to new chunk and construct new comps.
+
+			// 3. change old entity data.
+
+			return entity;
+		}
+	private:
 		template<typename ... Cs>
 		inline void Each(std::function<void(SEntity, Cs *...)> func, const SArcheTypeList& arclist) noexcept
 		{

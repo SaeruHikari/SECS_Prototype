@@ -24,6 +24,14 @@ public:
 		templatePack_TSizes_Internal<Ts...>(sizeof...(Ts), sizes);
 		return sizes;
 	}
+	
+	template <typename ...Ts>
+	inline static size_t* GetHashes_Torder()
+	{
+		size_t* res = new size_t[sizeof...(Ts)]();
+		getHash_Internal_Torder<Ts...>(sizeof...(Ts), res);
+		return res;
+	}
 
 	template <typename ... Ts>
 	inline static size_t* GetHashes()
@@ -76,6 +84,32 @@ public:
 	};
 
 private:
+
+	template<typename T>
+	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
+	{
+		_targ[_len - 1] = sizeof(T);
+	}
+
+	template<typename T, typename T2, typename ... __Ts>
+	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
+	{
+		templatePack_TSizes_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
+		templatePack_TSizes_Internal<T2, __Ts...>(_len, _targ);
+	}
+
+	template<typename T>
+	inline static void getHash_Internal_Torder(size_t _pos, size_t* _targ)
+	{
+		_targ[_pos - 1] = typeid(T).hash_code();
+	}
+	template<typename T, typename T2, typename ... __Ts>
+	inline static void getHash_Internal_Torder(size_t _len, size_t* _targ)
+	{
+		getHash_Internal_Torder<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
+		getHash_Internal_Torder<T2, __Ts...>(_len, _targ);
+	}
+
 	template<typename T>
 	inline static void getHash_Internal(size_t _pos, size_t* _targ)
 	{
@@ -92,19 +126,6 @@ private:
 	{
 		getHash_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
 		getHash_Internal<T2, __Ts...>( _len, _targ);
-	}
-
-	template<typename T>
-	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
-	{
-		_targ[_len - 1] = sizeof(T);
-	}
-
-	template<typename T, typename T2, typename ... __Ts>
-	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
-	{
-		templatePack_TSizes_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
-		templatePack_TSizes_Internal<T2, __Ts...>(_len, _targ);
 	}
 
 	template <typename T>

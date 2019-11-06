@@ -62,6 +62,15 @@
     <ClInclude Include="Types\DebugSystem.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CommandList\SCommandMachine.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandList\SCommandList.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandList\SCommand.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
