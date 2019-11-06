@@ -11,27 +11,12 @@ namespace SECS
 		{
 			
 		}
-		 void Update_Implementation(SEntity entity, ComponentA* a, ComponentB* b, ComponentC* c)
+		inline void Update_Implementation(SEntity entity, ComponentA* a, ComponentB* b, ComponentC* c)
 		{
-			//std::cout << a->x << "   " << c->c << std::endl;
+			 c->i += 15;
 		}
 
 	};
-	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, TestGroup);
+	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, SECSDefautGroup1);
 
-
-	class SDebugChildSystem : public SDebugSystem
-	{
-		DEF_SYSTEM_UPDATE(SDebugChildSystem, &SDebugChildSystem::Update_Implementation, this, DEF_SYSTEM_COMPONENTS(ComponentA, ComponentB, ComponentC));
-	public:
-		SDebugChildSystem()
-		{
-
-		}
-		void Update_Implementation(SEntity entity, ComponentA* a, ComponentB* b, ComponentC* c) 
-		{
-			std::cout << a->x << "   " << c->i << std::endl;
-		}
-	};
-	REGISTRY_SYSTEM_TO_GROUP(SDebugChildSystem, TestGroup);
 }

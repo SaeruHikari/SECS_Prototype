@@ -40,10 +40,10 @@ namespace SECS
 	
 	
 	template<typename T>
-	struct Register 
+	struct __SystemRegister 
 	{
 	public:
-		Register(std::string SysName, std::string GroupName)
+		__SystemRegister(std::string SysName, std::string GroupName)
 		{
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "REGISTER: " << SysName << " To " << GroupName << std::endl;
@@ -56,9 +56,9 @@ namespace SECS
 	  struct __className##_##__groupName##_SytemRegister_Helper\
 	 {\
           private:\
-              static Register<__className>* m_##__className##_##__groupName##_register;\
+              static __SystemRegister<__className>* m_##__className##_##__groupName##_register;\
 	 };\
-     Register<__className>* __className##_##__groupName##_SytemRegister_Helper::m_##__className##_##__groupName##_register = new Register<__className>(#__className, # __groupName);\
+     __SystemRegister<__className>* __className##_##__groupName##_SytemRegister_Helper::m_##__className##_##__groupName##_register = new __SystemRegister<__className>(#__className, # __groupName);\
 
 
 
@@ -78,14 +78,16 @@ public:\
 	}\
 
 
-	class SSystemBase
+	class ___SSystemBase
 	{
 		inline virtual void Update(SEntityManager* EntityManager) {};
 		inline virtual void CollectSystemBoostInfos(SEntityManager* entm, SArcheTypeManager* arcm) {};
 	};
 
-	REGISTRY_SYSTEM_TO_GROUP(SSystem, TestGroup);
-	class SSystem : public SSystemBase
+	REGISTRY_SYSTEM_TO_GROUP(SSystem, SECSDefautGroup);
+	//REGISTRY_SYSTEM_TO_GROUP(SSystem, TestGroup);
+	//DEF_SYSTEM_UPDATE(SSystem, &SSystem::Update_Implementation, this, DEF_SYSTEM_COMPONENTS(ComponentA, ComponentB));
+	class SSystem : public ___SSystemBase
 	{
 		friend class SWorld;
 	protected:
@@ -116,7 +118,7 @@ public:\
 				EntityManager->Each<T, Cs ...>(callback, _this, _this->m_Types);
 			}
 		public:
-			std::function<void(T*, SEntity, Cs *...)> callback;
+			void(T::* callback)(SEntity, Cs*...);
 			T* _this = nullptr;
 			// To fetch at initial time.
 		};

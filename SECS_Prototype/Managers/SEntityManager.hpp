@@ -106,7 +106,7 @@ namespace SECS
 		}
 
 		template<typename T>
-		inline T* FindComponent(const SEntity& entity)
+		inline T* FindComponent(const SEntity& entity) noexcept
 		{
 			if (!IsEntityAlive(entity)) return nullptr;
 			else return m_EntityData[entity.Index].Chunk->__getCompPtr<T>(m_EntityData[entity.Index].IndexInChunk);
@@ -133,7 +133,7 @@ namespace SECS
 		}
 
 		template<typename T, typename ... Cs>
-		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, const SArcheTypeList& arclist) noexcept
+		inline void Each(void(T::* func)(SEntity, Cs*...), T* caller, const SArcheTypeList& arclist) noexcept
 		{
 			for (int i = 0; i < arclist.size(); i++)
 			{
@@ -145,7 +145,7 @@ namespace SECS
 						SEntity entity = *_chunk->__getEntityPtr<SEntity>(i);
 						if (entity.generation == m_EntityData[entity.Index].generation)
 						{
-							func(caller, entity, _chunk->__getCompPtr<Cs>(i)...);
+							(caller->*func)(entity, _chunk->__getCompPtr<Cs>(i)...);
 						}
 					}
 				}
@@ -162,7 +162,7 @@ namespace SECS
 		}
 
 		template<typename T, typename ... Cs>
-		inline void Each(std::function<void(T*, SEntity, Cs *...)> func, T* caller, SArcheTypeManager arMng) noexcept
+		inline void Each(void(T::* func)(SEntity, Cs*...), T* caller, SArcheTypeManager arMng) noexcept
 		{
 			// Deal with arclist.
 			Each<T, Cs...>(func, caller, arMng->CompsGetArcheTypes<Cs...>());

@@ -98,18 +98,26 @@ void TestDestory()
 	world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
 		world->DestoryEntity(entity);
 		});
-
 	time2 = ::GetTickCount64();
 	std::cout << std::endl << time2 - time << std::endl << std::endl;
+}
+
+inline void AB(SEntity entity, ComponentA* a, ComponentB* b)
+{
+	a->x += 5;
+	a->y += 5;
+	a->z += 5;
 }
 
 void TestIterate()
 {
 	SSystem* sys = new SSystem();
 
+	int IterLoop = 50;
+
 	::Sleep(1000);
 	float time = ::GetTickCount64();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < IterLoop; i++)
 	{
 		for (int j = 0; j < actors.size(); j++)
 		{
@@ -124,7 +132,7 @@ void TestIterate()
 
 	::Sleep(1000);
 	time = ::GetTickCount64();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < IterLoop; i++)
 	{
 		world->TickSystemGroups();
 	}
@@ -135,8 +143,7 @@ void TestIterate()
 	
 	::Sleep(1000);
 	time = ::GetTickCount64();
-	static int j = 0;
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < IterLoop; i++)
 	{
 		world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
 			a->x += 5;
@@ -165,43 +172,44 @@ int main()
 	// 4. Finish construction and work with freeChunkList pointer, etc...					√
 	world = SWorld::CreateSWorld("TestWorld");
 
-	TestNew();
+	//TestNew();
 
-	for(int i = 0; i < 1000; i++)
+	int Loop = 100000;
+	for(int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(); //0
-	for (int i = 0; i < 5000; i++)
+	for (int i = 0; i < Loop; i++)
 		auto en1 = world->CreateEntity<ComponentA, ComponentD>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentA, double>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentB>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<char, double, std::string, int>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentA, ComponentC, ComponentD>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentC>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<char>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<double>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentD>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentE>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentF>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentG>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentH>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentI>();
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentB, ComponentB, int>();                         //6
 
 
-	world->AddSystemGroup("TestGroup");
+	world->AddSystemGroup("SECSDefautGroup");
 
 	TestIterate();
 

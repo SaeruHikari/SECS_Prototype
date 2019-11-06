@@ -93,7 +93,7 @@ namespace SECS
 			SizeOfs = new size_t[sizeof...(Components)]();
 			EntitySize = sizeof(*e);
 			__init__Internal<Components...>();
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) || defined(_DEBUG) 
 			std::cout << "End construct! " << typeid(*this).name() << std::endl << std::endl;
 #endif
 		}
