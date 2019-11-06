@@ -68,10 +68,24 @@ namespace SECS
 private:\
 ComponentSystemData<__className, __VA_ARGS__> SystemData = ComponentSystemData<__className, __VA_ARGS__>(__THIS, __funcAddress);\
 public:\
+	inline virtual void Update(SEntityManager* EntityManager) override\
+	{\
+		SystemData.__update_Internal(EntityManager);\
+	}\
+	inline virtual void CollectSystemBoostInfos(SEntityManager* entm, SArcheTypeManager* arcm) override\
+	{\
+		SystemData.__collectInfos_Internal(entm, arcm);\
+	}\
 
+
+	class SSystemBase
+	{
+		inline virtual void Update(SEntityManager* EntityManager) {};
+		inline virtual void CollectSystemBoostInfos(SEntityManager* entm, SArcheTypeManager* arcm) {};
+	};
 
 	REGISTRY_SYSTEM_TO_GROUP(SSystem, TestGroup);
-	class SSystem
+	class SSystem : public SSystemBase
 	{
 		friend class SWorld;
 	protected:
@@ -121,16 +135,6 @@ public:\
 			a->z += 5;
 		}
 
-		inline virtual void Update(SEntityManager* EntityManager)
-		{
-			SystemData.__update_Internal(EntityManager);
-		}
-
-		inline virtual void CollectSystemBoostInfos(SEntityManager* entm, SArcheTypeManager* arcm)
-		{
-			SystemData.__collectInfos_Internal(entm, arcm);
-		}
-
 	public:
 		SSystem()
 		{
@@ -142,4 +146,6 @@ public:\
 		}
 		virtual ~SSystem() {};
 	};
+
+
 }

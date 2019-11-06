@@ -16,10 +16,6 @@ namespace SECS
 			//std::cout << a->x << "   " << c->c << std::endl;
 		}
 
-		inline virtual void Update(SEntityManager* EntityManager) override
-		{
-			SystemData.__update_Internal(EntityManager);
-		}
 	};
 	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, TestGroup);
 
@@ -35,11 +31,6 @@ namespace SECS
 		void Update_Implementation(SEntity entity, ComponentA* a, ComponentB* b, ComponentC* c) 
 		{
 			std::cout << a->x << "   " << c->i << std::endl;
-		}
-
-		inline virtual void Update(SEntityManager* EntityManager) override
-		{
-			SystemData.__update_Internal(EntityManager);
 		}
 	};
 	REGISTRY_SYSTEM_TO_GROUP(SDebugChildSystem, TestGroup);
