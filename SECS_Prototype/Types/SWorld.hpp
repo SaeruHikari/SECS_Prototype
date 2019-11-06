@@ -59,6 +59,11 @@ namespace SECS
 			return EntityManager->IsEntityAlive(entity);
 		}
 
+		inline SArcheType* FindArcheType(const SEntity& entity)
+		{
+			return EntityManager->FindArcheType(entity);
+		}
+
 		template<typename T>
 		inline T* FindComponent(const SEntity& entity)
 		{

@@ -123,26 +123,34 @@ namespace SECS
 			properties->FreeUnits += 1;
 		}
 
+		inline bool __moveLastEntityComponentFrom(SChunk* _src, size_t _indexTo) noexcept
+		{
+			__moveEntityComponentFrom(_src, _indexTo, _src->properties->Count - _src->properties->FreeUnits - 1);
+		}
+
 		// unsafe, will cover current entity component instance.
 		// operate on chunks with different archetypes will return false.
-		inline bool __moveLastEntityComponentFrom(SChunk* _src, size_t _indexTo) noexcept
+		inline bool __moveEntityComponentFrom(SChunk* _src, size_t _indexTo, size_t _indexFrom) noexcept
 		{
 			// precheck
 			if (_src == this && _indexTo == properties->Count - properties->FreeUnits - 1) 
 				return true;
 			if ((_src->properties->ArcheType != properties->ArcheType))
-				return false;
-			size_t _srcEnd = _src->properties->Count - _src->properties->FreeUnits - 1;
-			// move
-			memcpy(__getEntityPtr(_indexTo), _src->__getEntityPtr(_srcEnd), properties->ArcheType->EntitySize);
-			// mask src
-			_src->__getEntityPtr(_srcEnd)->generation = -1;
-			SEntity* ent = _src->__getEntityPtr(_srcEnd);
-			for (int i = 0; i < properties->ArcheType->ComponentNum; i++)
 			{
-				memcpy(__unsafeGetCompPtr(i, _indexTo), _src->__unsafeGetCompPtr(i, _srcEnd), properties->ArcheType->SizeOfs[i]);
+
 			}
-			_src->__clearEntityComponentLast();
+			else
+			{
+				// move
+				memcpy(__getEntityPtr(_indexTo), _src->__getEntityPtr(_indexFrom), properties->ArcheType->EntitySize);
+				// mask src
+				_src->__getEntityPtr(_indexFrom)->generation = -1;
+				for (int i = 0; i < properties->ArcheType->ComponentNum; i++)
+				{
+					memcpy(__unsafeGetCompPtr(i, _indexTo), _src->__unsafeGetCompPtr(i, _indexFrom), properties->ArcheType->SizeOfs[i]);
+				}
+				_src->__clearEntityComponentLast();
+			}
 			return true;
 		}
 

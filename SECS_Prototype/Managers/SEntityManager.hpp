@@ -32,6 +32,12 @@ namespace SECS
 		std::vector<SEntity> m_Entities;
 
 	private:
+		template<typename C>
+		inline SEntity AddComponent(SEntity& entity)
+		{
+
+		}
+
 		template<typename ... Components>
 		inline SEntity CreateEntity(SArcheTypeManager* arMng) noexcept
 		{
@@ -68,7 +74,7 @@ namespace SECS
 		}
 
 		// Returns false when the entity is not found.
-		inline bool DestoryEntity(SEntity& entity)
+		inline bool DestoryEntity(SEntity& entity) 
 		{
 			/*
 			if (m_EntityData.size() <= entity.Index) 
@@ -98,7 +104,7 @@ namespace SECS
 		}
 
 		// Check if an entity is alive.
-		inline bool IsEntityAlive(const SEntity& entity)
+		inline bool IsEntityAlive(const SEntity& entity) noexcept
 		{
 			if (m_EntityData.size() <= entity.Index) 
 				return false;
@@ -112,6 +118,12 @@ namespace SECS
 			else return m_EntityData[entity.Index].Chunk->__getCompPtr<T>(m_EntityData[entity.Index].IndexInChunk);
 		}
 
+		inline SArcheType* FindArcheType(const SEntity& entity) noexcept
+		{
+			if (!IsEntityAlive(entity)) return nullptr;
+			else return m_EntityData[entity.Index].Chunk->properties->ArcheType;
+		}
+
 		template<typename ... Cs>
 		inline void Each(std::function<void(SEntity, Cs *...)> func, const SArcheTypeList& arclist) noexcept
 		{
@@ -122,10 +134,9 @@ namespace SECS
 					SChunk* _chunk = (*arclist[i]->chunks)[j];
 					for (int i = 0; i < _chunk->properties->Count - _chunk->properties->FreeUnits; i++)
 					{
-						SEntity entity = *_chunk->__getEntityPtr<SEntity>(i);
-						if (entity.generation == m_EntityData[entity.Index].generation)
+						if (_chunk->__getEntityPtr<SEntity>(i)->generation == m_EntityData[_chunk->__getEntityPtr<SEntity>(i)->Index].generation)
 						{
-							func(entity, _chunk->__getCompPtr<Cs>(i)...);
+							func(*(_chunk->__getEntityPtr<SEntity>(i)), _chunk->__getCompPtr<Cs>(i)...);
 						}
 					}
 				}
@@ -142,10 +153,9 @@ namespace SECS
 					SChunk* _chunk = (*arclist[i]->chunks)[j];
 					for (int i = 0; i < _chunk->properties->Count - _chunk->properties->FreeUnits; i++)
 					{
-						SEntity entity = *_chunk->__getEntityPtr<SEntity>(i);
-						if (entity.generation == m_EntityData[entity.Index].generation)
+						if (_chunk->__getEntityPtr<SEntity>(i)->generation == m_EntityData[_chunk->__getEntityPtr<SEntity>(i)->Index].generation)
 						{
-							(caller->*func)(entity, _chunk->__getCompPtr<Cs>(i)...);
+							(caller->*func)(*(_chunk->__getEntityPtr<SEntity>(i)), _chunk->__getCompPtr<Cs>(i)...);
 						}
 					}
 				}

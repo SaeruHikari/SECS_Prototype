@@ -9,20 +9,20 @@ Details:
 class TemplatePackUtils
 {
 public:
-	template <typename T, typename... TArgs>
-	inline static uint32_t TemplatePack_Num(T* t, TArgs* ... args)
+	template <typename ... Ts>
+	inline static uint32_t TemplatePack_SizeOfT()
 	{
-		int num = 0;
-		TemplatePack_Num_Internal(num, t, args...);
+		uint32_t num = 0;
+		TemplatePack_SizeOfT_Internal<Ts...>(num);
 		return num;
 	}
 
-	template <typename ... Ts>
-	inline static uint32_t TemplatePack_SizeOf()
+	template<typename ... Ts>
+	inline static size_t* TemplatePack_TSizes()
 	{
-		uint32_t num = 0;
-		TemplatePack_SizeOf_Internal<Ts...>(num);
-		return num;
+		size_t* sizes = new size_t[sizeof...(Ts)]();
+		templatePack_TSizes_Internal<Ts...>(sizeof...(Ts), sizes);
+		return sizes;
 	}
 
 	template <typename ... Ts>
@@ -79,14 +79,13 @@ private:
 	template<typename T>
 	inline static void getHash_Internal(size_t _pos, size_t* _targ)
 	{
-		size_t _hash = typeid(T).hash_code();
 		// do insert, hash small ~ big
 		int i = _pos - 2;
-		for (i; i >= 0 &_hash < _targ[i]; i--)
+		for (i; i >= 0 & typeid(T).hash_code() < _targ[i]; i--)
 		{
 			_targ[i + 1] = _targ[i];
 		}
-		_targ[i + 1] = _hash;
+		_targ[i + 1] = typeid(T).hash_code();
 	}
 	template<typename T, typename T2, typename ... __Ts>
 	inline static void getHash_Internal(size_t _len, size_t* _targ)
@@ -95,30 +94,29 @@ private:
 		getHash_Internal<T2, __Ts...>( _len, _targ);
 	}
 
+	template<typename T>
+	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
+	{
+		_targ[_len - 1] = sizeof(T);
+	}
+
+	template<typename T, typename T2, typename ... __Ts>
+	inline static void templatePack_TSizes_Internal(size_t _len, size_t* _targ)
+	{
+		templatePack_TSizes_Internal<T>((size_t)(_len - sizeof...(__Ts)) - 1, _targ);
+		templatePack_TSizes_Internal<T2, __Ts...>(_len, _targ);
+	}
+
 	template <typename T>
-	inline static void TemplatePack_SizeOf_Internal(uint32_t& num)
+	inline static void TemplatePack_SizeOfT_Internal(uint32_t& num)
 	{
 		num += sizeof(T);
 	}
 
 	template <typename T, typename T2, typename ... Ts>
-	inline static void TemplatePack_SizeOf_Internal(uint32_t& num)
+	inline static void TemplatePack_SizeOfT_Internal(uint32_t& num)
 	{
 		TemplatePack_SizeOf_Internal<T>(num);
 		TemplatePack_SizeOf_Internal<T2, Ts...>(num);
-	}
-
-	template <typename T>
-	inline static void TemplatePack_Num_Internal(int& num, T* t)
-	{
-		num += 1;
-	}
-
-	template <typename T, typename... TArgs>
-	inline static uint32_t TemplatePack_Num_Internal(int& num, T* t, TArgs* ... args)
-	{
-		num += 1;
-		TemplatePack_Num_Internal(num, args...);
-		return num;
 	}
 };

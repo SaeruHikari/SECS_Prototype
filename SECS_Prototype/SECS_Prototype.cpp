@@ -174,7 +174,7 @@ int main()
 
 	//TestNew();
 
-	int Loop = 100000;
+	int Loop = 10000;
 	for(int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentA, ComponentB, ComponentC, ComponentD>(); //0
 	for (int i = 0; i < Loop; i++)
@@ -208,6 +208,15 @@ int main()
 	for (int i = 0; i < Loop; i++)
 		world->CreateEntity<ComponentB, ComponentB, int>();                         //6
 
+
+	auto en0 = world->CreateEntity<ComponentA>();
+	auto en1 = world->CreateEntity<ComponentA, ComponentB, ComponentD>();
+
+ 	auto arc0 = world->FindArcheType(en0);
+ 	auto arc1 = world->FindArcheType(en1);
+	auto arc0b = arc0->Expand<ComponentB, ComponentD>();
+
+	std::cout << arc1->Is(&arc0b) << std::endl << std::endl;
 
 	world->AddSystemGroup("SECSDefautGroup");
 

@@ -27,6 +27,62 @@ namespace SECS
 		SChunkList* chunks = nullptr;
 		SChunk* freeChunk = nullptr;
 	public:
+		template<typename... Ts>
+		inline SArcheType Expand()
+		{
+			size_t* _hashes = TemplatePackUtils::GetHashes<Ts...>();
+			size_t* _sizes = TemplatePackUtils::TemplatePack_TSizes<Ts...>();
+			return std::move(Expand(_hashes, sizeof...(Ts), _sizes));
+		}
+		inline SArcheType Expand(size_t* _InHash, int _HashLength, size_t* _EntitySizes)
+		{
+			assert(_HashLength > 0);
+			SArcheType _newArche = *this;
+			_newArche.chunks = nullptr;
+
+			_newArche.ComponentTotalSize += EntitySize;
+			_newArche.freeChunk = nullptr;
+			// insert 
+			_HashLength--;
+			int i;
+			for (_HashLength; _HashLength >= 0; _HashLength--)
+			{
+				for (i = ComponentNum - 1; i >= 0 && _newArche.typeHashes[i] > _InHash[_HashLength]; i--)
+				{
+					_newArche.typeHashes[i + 1] = _newArche.typeHashes[i];
+					_newArche.SizeOfs[i + 1] = _newArche.SizeOfs[i];
+				}
+				_newArche.typeHashes[i + 1] = _InHash[_HashLength];
+				_newArche.SizeOfs[i + 1] = _EntitySizes[_HashLength];
+				
+				// Insert finish, comp num++
+				_newArche.ComponentNum += 1;
+			}
+			// Recompute offsets
+			_newArche.ComponentOffsets[0] = 0;
+			for (i = 1; i < ComponentNum; i++)
+			{
+				_newArche.ComponentOffsets[i] = _newArche.ComponentOffsets[i - 1] + _newArche.SizeOfs[i - 1];
+			}
+			// return moved
+			return std::move(_newArche);
+		}
+	public:
+		inline bool Is(size_t num, size_t* _typeHashes)
+		{
+			if (num != this->ComponentNum) return false;
+			while (num > 0)
+			{
+				num--;
+				if (typeHashes[num] != _typeHashes[num]) return false;	
+			}
+			return true;
+		}
+		inline bool Is(SArcheType* _arc)
+		{
+			return Is(_arc->ComponentNum, _arc->typeHashes);
+		}
+	public:
 		// Returns -1 when not such component found.
 		template<typename T>
 		inline int GetComponentIndex()
