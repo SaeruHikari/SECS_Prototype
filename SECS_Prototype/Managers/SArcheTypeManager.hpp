@@ -117,6 +117,9 @@ namespace SECS
 		inline SArcheType* RegistArchetype(SArcheType* _arc)
 		{
 			m_TypeLookup[_arc->ComponentNum].push_back(_arc);
+#if defined(_DEBUG) || defined(DEBUG)
+			std::cout << "SArcheType Manager: Regist new archetype." << std::endl;
+#endif
 			return _arc;
 		}
 

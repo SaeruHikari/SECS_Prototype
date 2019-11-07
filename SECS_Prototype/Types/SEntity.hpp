@@ -20,14 +20,10 @@ namespace SECS
 		{
 			return generation;
 		}
-		inline SWorld* GetWorld()
-		{
-			return world;
-		}
+
 		virtual ~SEntity() {};
 	private:
 		// Index of SEntity
-		SWorld* world = nullptr;
 	    size_t Index = -1;
 		int generation = -1;
 	};

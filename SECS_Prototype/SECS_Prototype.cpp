@@ -77,9 +77,14 @@ void TestIterate()
 	world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
 		ii++;
 		world->DestoryEntity(entity);
-		std::cout << entity.GetIndex() << std::endl;
+		//std::cout << entity.GetIndex() << std::endl;
 		});
 	world->Each<ComponentA, ComponentB>([=](SEntity entity, ComponentA* a, ComponentB* b) {
+		ii++;
+		//world->DestoryEntity(entity);
+		//std::cout << entity.GetIndex() << std::endl;
+		});
+	world->Each<int, double>([=](SEntity entity, int* a, double* b) {
 		ii++;
 		world->DestoryEntity(entity);
 		});
@@ -143,9 +148,7 @@ int main()
 
 	world->AddSystemGroup("SECSDefaultGroup");
 
-
-
-	//world->GetEntityManager()->AddComponent<std::ostream>(en0, world->GetArcheTypeManager());
+	world->GetEntityManager()->AddComponent<double>(en1, world->GetArcheTypeManager());
 
 	world->TickSystemGroups();
 

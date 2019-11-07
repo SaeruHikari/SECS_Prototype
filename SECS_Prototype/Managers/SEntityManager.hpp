@@ -13,6 +13,8 @@ namespace SECS
 	{
 		friend class SWorld;
 		friend class SSystem;
+		friend class SCommand;
+		friend class SDestoryEntityCommand;
 	private:
 		SEntityManager()
 		{
@@ -75,26 +77,38 @@ namespace SECS
 				return false;
 			if (!IsEntityAlive(entity)) 
 				return false;
-			// Check if free chunk is empty. If so free it.
-			if (m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk->properties->Count
-				== m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk->properties->FreeUnits)
-			{
-				m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->pop_back();
-				delete m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk;
-				if (m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->size() == 0)
-					m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk = nullptr;
-				else m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk
-					= (*m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks)[m_EntityData[entity.Index].Chunk->properties->ArcheType->chunks->size() - 1];		
-			}
-			
-			// kill entity.Index    move last
-			m_EntityData[entity.Index].Chunk->__moveLastEntityComponentFrom(
-				m_EntityData[entity.Index].Chunk->properties->ArcheType->freeChunk,
-				m_EntityData[entity.Index].IndexInChunk);
-		    
-			
 			m_EntityData[entity.Index].generation += 1;
+
 			return true;
+		}
+
+		inline void DestroyEntityOnChunk(SEntity& entity)
+		{
+			// kill entity.Index    move last
+			SChunk* targChunk = m_EntityData[entity.Index].Chunk;
+			int Index = m_EntityData[entity.Index].IndexInChunk;
+			auto ArcType = m_EntityData[Index].Chunk->properties->ArcheType;
+			SEntity* newEnt = targChunk->__moveLastEntityComponentFrom(
+				ArcType->freeChunk,
+				Index);
+
+			m_EntityData[newEnt->GetIndex()].Chunk = targChunk;
+			m_EntityData[newEnt->GetIndex()].IndexInChunk = Index;
+
+
+			// Check if free chunk is empty. If so free it.
+			if (ArcType->freeChunk->properties->Count
+				== ArcType->freeChunk->properties->FreeUnits)
+			{
+				ArcType->chunks->pop_back();
+				delete ArcType->freeChunk;
+				ArcType->freeChunk = nullptr;
+				std::cout << "Destroy Chunk of archetype!" << std::endl;
+				if (ArcType->chunks->size() == 0)
+					ArcType->freeChunk = nullptr;
+				else 
+					ArcType->freeChunk = (*ArcType->chunks)[ArcType->chunks->size() - 1];
+			}
 		}
 
 		// Check if an entity is alive.
@@ -137,11 +151,14 @@ namespace SECS
 			// Get or create new chunk.
 			SChunk* _chunk = arMng->GetFreeSChunk(_regist);
 			// 1. move and destory old:
-
-			// 2. copy old entity to new chunk and construct new comps.
-
+			_chunk->__moveEntityComponentFrom(m_EntityData[entity.GetIndex()].Chunk,
+				_chunk->properties->Count - _chunk->properties->FreeUnits,
+				m_EntityData[entity.GetIndex()].IndexInChunk);
+			_chunk->properties->FreeUnits -= 1;
 			// 3. change old entity data.
-
+			m_EntityData[entity.GetIndex()].Chunk = _chunk;
+			m_EntityData[entity.GetIndex()].IndexInChunk = 
+				_chunk->properties->Count - _chunk->properties->FreeUnits;
 			return entity;
 		}
 	private:

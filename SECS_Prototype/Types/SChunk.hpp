@@ -123,18 +123,24 @@ namespace SECS
 			properties->FreeUnits += 1;
 		}
 
-		inline bool __moveLastEntityComponentFrom(SChunk* _src, size_t _indexTo) noexcept
+		inline SEntity* __moveLastEntityComponentFrom(SChunk* _src, size_t _indexTo) noexcept
 		{
 			return __moveEntityComponentFrom(_src, _indexTo, _src->properties->Count - _src->properties->FreeUnits - 1);
 		}
 
 		// unsafe, will cover current entity component instance.
 		// operate on chunks with different archetypes will return false.
-		inline bool __moveEntityComponentFrom(SChunk* _src, size_t _indexTo, size_t _indexFrom) noexcept
+		inline SEntity* __moveEntityComponentFrom(SChunk* _src, size_t _indexTo, size_t _indexFrom) noexcept
 		{
 			// precheck
-			if (_src == this && _indexTo == properties->Count - properties->FreeUnits - 1) 
-				return true;
+			ChunkProperties* chunkProp = properties;
+			if (_src->properties == properties && _indexTo == _indexFrom)
+			{
+				properties->FreeUnits -= 1;
+				return __getEntityPtr(_indexTo);
+			}	
+			if ((_indexTo > this->properties->Count - 1) || (_indexFrom > _src->properties->Count - 1))
+				return nullptr;
 			// start loop component move
 			uint16_t dstI = 0;
 			uint16_t srcI = 0;
@@ -153,9 +159,12 @@ namespace SECS
 				else //move
 					memcpy(d, s, dstType->SizeOfs[(srcI++, dstI++)]);
 			}
-			// No conclusion of Destroying.
-			//_src->__clearEntityComponentLast();
-			return true;
+			//properties->FreeUnits -= 1;
+			// Toggle usable
+			_src->__clearEntityComponentLast();
+			SEntity* ent = __getEntityPtr(_indexTo);
+
+			return __getEntityPtr(_indexTo);
 		}
 
 		// Returns false when the chunk is full.

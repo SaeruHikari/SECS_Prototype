@@ -58,7 +58,7 @@ namespace SECS
 
 		//inline SArcheType Shrink(size_t* _InHash, int _HashLength, size_t* _ComponentSizes)
 		//{
-			
+				
 		//}
 
 		inline SArcheType Expand(size_t* _InHash, int _HashLength, size_t* _ComponentSizes) noexcept

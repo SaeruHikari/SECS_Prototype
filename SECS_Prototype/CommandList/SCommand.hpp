@@ -1,12 +1,27 @@
 #pragma once
+#include "..\Managers\SEntityManager.hpp"
 
-enum class E_SCommand : size_t
+namespace SECS
 {
-	E_DESTROYENTITY = 0,
-	E_COUNT = 1
-};
+	struct SCommand
+	{
+		virtual void Execute(SEntityManager* entMng) = 0;
+	};
 
-struct SCommand
-{
+	struct SDestoryEntityCommand : public SCommand
+	{
+		SDestoryEntityCommand() = default;
+		SDestoryEntityCommand(SEntity& _entity)
+			:entity(_entity)
+		{
+		
+		}
+		SEntity entity;
+		void Execute(SEntityManager* entMng)
+		{
+			entMng->DestroyEntityOnChunk(entity);
+		}
+	};
+}
 
-};
+

@@ -2,6 +2,7 @@
 #include "..\Managers\SArcheTypeManager.hpp"
 #include "..\Managers\SEntityManager.hpp"
 #include "Types/DebugSystem.hpp"
+#include "..\CommandList\SCommandMachine.hpp"
 
 
 
@@ -17,6 +18,7 @@ namespace SECS
 		{
 			ArcheTypeManager = new SArcheTypeManager();
 			EntityManager = new SEntityManager();
+			CommandMachine = new SCommandMachine();
 		}
 
 		static SWorld* CreateSWorld(std::string _Name)
@@ -40,7 +42,6 @@ namespace SECS
 		inline SEntity CreateEntity()
 		{
 			SEntity _entity = EntityManager->CreateEntity<Cs...>(ArcheTypeManager);
-			_entity.world = this;
 			return _entity;
 		}
 
@@ -48,11 +49,17 @@ namespace SECS
 		inline void Each(std::function<void(SEntity, Cs* ...)> func) noexcept
 		{
 			EntityManager->Each(func, ArcheTypeManager);
+			CommandMachine->Execute(EntityManager);
 		}
 
 		inline bool DestoryEntity(SEntity& entity) 
 		{
-			return EntityManager->DestoryEntity(entity);
+			if (EntityManager->DestoryEntity(entity))
+			{
+				CommandMachine->push_Command<SDestoryEntityCommand>(entity);
+				return true;
+			}
+			return false;
 		}
 
 		inline bool IsEntityAlive(const SEntity& entity)
@@ -79,15 +86,6 @@ namespace SECS
 		{
 			return ArcheTypeManager;
 		}
-
-		template<typename S>
-		inline void AddSystem()
-		{
-			SSystem* sys = new S();
-			sys->SystemData.__collectInfos_Internal(EntityManager, ArcheTypeManager);
-			ActiveSystemsLists.push_back(sys);
-		}
-
 
 		inline bool AddSystemGroup(std::string SystemGroupName)
 		{
@@ -117,6 +115,7 @@ namespace SECS
 					SSystemGroup::SystemGroups[SystemGroups[i]][j]->Update(EntityManager);
 				}
 			}
+			CommandMachine->Execute(EntityManager);
 		}
 
 	private:
@@ -128,6 +127,7 @@ namespace SECS
 		}
 	private:
 		std::string Name;
+		SCommandMachine* CommandMachine = nullptr;
 		SArcheTypeManager* ArcheTypeManager = nullptr;
 		SEntityManager* EntityManager = nullptr;
 		std::vector<std::string> SystemGroups;
