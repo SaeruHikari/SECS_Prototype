@@ -172,6 +172,7 @@
     <ClInclude Include="Managers\SEntityManager.hpp" />
     <ClInclude Include="Types\SSystem.hpp" />
     <ClInclude Include="TemplateUtils\TemplatePackUtils.hpp" />
+    <ClInclude Include="Types\SSystemGroup.hpp" />
     <ClInclude Include="Types\SWorld.hpp" />
   </ItemGroup>
   <ItemGroup>

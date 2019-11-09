@@ -161,6 +161,13 @@ namespace SECS
 				_chunk->properties->Count - _chunk->properties->FreeUnits;
 			return entity;
 		}
+
+		template<typename ... Cs>
+		inline SEntity DestoryComponent(SEntity& entity, SArcheTypeManager* arMng)
+		{
+
+			return entity;
+		}
 	private:
 		template<typename ... Cs>
 		inline void Each(std::function<void(SEntity, Cs *...)> func, const SArcheTypeList& arclist) noexcept

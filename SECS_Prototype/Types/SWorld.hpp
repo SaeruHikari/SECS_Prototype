@@ -3,8 +3,7 @@
 #include "..\Managers\SEntityManager.hpp"
 #include "Types/DebugSystem.hpp"
 #include "..\CommandList\SCommandMachine.hpp"
-
-
+#include "SSystemGroup.hpp"
 
 namespace SECS
 {
@@ -87,33 +86,27 @@ namespace SECS
 			return ArcheTypeManager;
 		}
 
-		inline bool AddSystemGroup(std::string SystemGroupName)
+		inline bool AddSystem(std::string SystemGroupName)
 		{
-			 SSystemList* listPtr= SSystemGroup::GetSystemGroupList(SystemGroupName);
+			 SSystem* rootGroup = SSystemGroup::GetRootSystems(SystemGroupName);
 #if defined(DEBUG) || defined(_DEBUG)
 			 if (listPtr == nullptr) std::cout << "System group trying to load do NOT EXIST." << std::endl;
 #endif
-			 if (listPtr == nullptr) return false;
-			 SystemGroups.push_back(SystemGroupName);
+			 if (rootGroup == nullptr) return false;
+			 m_rootGroups.push_back(SystemGroupName);
 #if defined(DEBUG) || defined(_DEBUG)
 			 std::cout << "World " << Name << " added system group: " << SystemGroupName << " into tick group!" << std::endl;
 #endif
-			 for (int i = 0; i < listPtr->size(); i++)
-			 {
-				 (*listPtr)[i]->CollectSystemBoostInfos(EntityManager, ArcheTypeManager);
-			 }
+			 rootGroup->CollectSystemBoostInfos(EntityManager, ArcheTypeManager);
 			 return true;
 		}
 
 		// Tick function, merge it into your message loop.
 		inline void TickSystemGroups()
 		{
-			for (int i = 0; i < SystemGroups.size(); i++)
+			for (int i = 0; i < m_rootGroups.size(); i++)
 			{
-				for (int j = 0; j < SSystemGroup::SystemGroups[SystemGroups[i]].size(); j++)
-				{
-					SSystemGroup::SystemGroups[SystemGroups[i]][j]->Update(EntityManager);
-				}
+				SSystemGroup::SystemGroups[m_rootGroups[i]]->Update(EntityManager);
 			}
 			CommandMachine->Execute(EntityManager);
 		}
@@ -130,7 +123,7 @@ namespace SECS
 		SCommandMachine* CommandMachine = nullptr;
 		SArcheTypeManager* ArcheTypeManager = nullptr;
 		SEntityManager* EntityManager = nullptr;
-		std::vector<std::string> SystemGroups;
+		std::vector<std::string> m_rootGroups;
 	};
 	std::unordered_map<std::string, SWorld*> SWorld::Worlds = SWorld::__InitWorldMap();
 }

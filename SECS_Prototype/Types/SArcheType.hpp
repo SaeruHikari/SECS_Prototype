@@ -56,10 +56,45 @@ namespace SECS
 			return Expand(_hashes, sizeof...(Ts), _sizes);
 		}
 
-		//inline SArcheType Shrink(size_t* _InHash, int _HashLength, size_t* _ComponentSizes)
-		//{
-				
-		//}
+		inline SArcheType Shrink(size_t* _InHash, int _HashLength, size_t* _ComponentSizes)
+		{
+			assert(_HashLength > 0);
+			SArcheType _newArche = SArcheType(EntitySize, 0, ComponentNum - _HashLength);
+			size_t src_I = 0;
+			size_t dst_I = 0;
+			// 
+			while (dst_I < ComponentNum)
+			{
+				auto st = _InHash[src_I];
+				auto dt = typeHashes[dst_I];
+				if (src_I < _HashLength)
+				{
+					if (st != dt)
+					{
+						_newArche.typeHashes[dst_I] = typeHashes[dst_I];
+						_newArche.SizeOfs[dst_I] = SizeOfs[dst_I];
+						_newArche.ComponentTotalSize += SizeOfs[dst_I];
+						dst_I++;
+					}
+					else { src_I++; }
+				}
+				else if (src_I == _HashLength)
+				{
+					// Copy the rest
+					_newArche.typeHashes[dst_I] = typeHashes[dst_I];
+					_newArche.SizeOfs[dst_I] = SizeOfs[dst_I];
+					_newArche.ComponentTotalSize += SizeOfs[dst_I];
+					dst_I++;
+				}
+			}
+			// Recompute offsets
+			_newArche.ComponentOffsets[0] = 0;
+			for (dst_I = 1; dst_I < _newArche.ComponentNum; dst_I++)
+			{
+				_newArche.ComponentOffsets[dst_I] = _newArche.ComponentOffsets[dst_I - 1] + _newArche.SizeOfs[dst_I - 1];
+			}
+			return _newArche;
+		}
 
 		inline SArcheType Expand(size_t* _InHash, int _HashLength, size_t* _ComponentSizes) noexcept
 		{

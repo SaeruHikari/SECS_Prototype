@@ -138,22 +138,26 @@ int main()
 
 
 	auto en0 = world->CreateEntity<ComponentA, ComponentB, ComponentC, int>();                         
+	auto enc = world->CreateEntity<ComponentA, ComponentB, ComponentC>();                         
 	auto en1 = world->CreateEntity<ComponentB, int>();                         
 	auto en2 = world->CreateEntity<double>();                         
 
 	auto arc0 = world->FindArcheType(en0);
+	auto arcc = world->FindArcheType(enc);
 	auto arc1 = world->FindArcheType(en1);
 	auto arc2 = world->FindArcheType(en2);
 
+	auto arccc = arc0->Shrink<int>();
+	std::cout << *arc0 << std::endl << std::endl << arccc << std::endl << std::endl << *arcc << std::endl;
 
-	world->AddSystemGroup("SECSDefaultGroup");
+	world->AddSystem("SECSDefaultGroup");
 
 	world->GetEntityManager()->AddComponent<double>(en1, world->GetArcheTypeManager());
 
 	world->TickSystemGroups();
 
 	SDebugSystem* sys = new SDebugSystem();
-	SSystemGroup::AddSystemToGroupList("SECSDefaultGroup", sys);
+	SSystemGroup::AddSystemToRootSystems("SECSDefaultGroup", sys);
 
 	world->TickSystemGroups();
 

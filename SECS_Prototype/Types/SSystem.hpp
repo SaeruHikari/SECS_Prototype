@@ -15,32 +15,6 @@ Details:
 // 3. filter.
 namespace SECS
 {
-	class SSystemGroup
-	{
-		friend SWorld;
-	private:
-		static SSystemList* GetSystemGroupList(std::string GroupName)
-		{
-			if (SystemGroups.find(GroupName) != SystemGroups.end())
-				return &SystemGroups[GroupName];
-			else return nullptr;
-		}
-	public:
-		static void AddSystemToGroupList(std::string GroupName, SSystem* sys)
-		{
-			SystemGroups[GroupName].push_back(sys);
-		}
-	private:
-		static std::unordered_map<std::string, SSystemList> SystemGroups;
-		static std::unordered_map<std::string, SSystemList> InitSystemGroups()
-		{
-			std::unordered_map<std::string, SSystemList> _Groups;
-			return _Groups;
-		}
-	};
-	std::unordered_map<std::string, SSystemList> SSystemGroup::SystemGroups = SSystemGroup::InitSystemGroups();
-	
-	
 	template<typename T>
 	struct __SystemRegister 
 	{
@@ -50,11 +24,11 @@ namespace SECS
 #if defined(DEBUG) || defined(_DEBUG)
 			std::cout << "REGISTER: " << SysName << " To " << GroupName << std::endl;
 #endif // 
-			SSystemGroup::AddSystemToGroupList(GroupName, new T());
+			SSystemGroup::AddSystemToRootSystems(GroupName, new T());
 		}
 	};
 
-#define REGISTRY_SYSTEM_TO_GROUP(__className, __groupName)\
+#define REGISTRY_SYSTEM_TO_ROOT_GROUP(__className, __groupName)\
 	  struct __className##_##__groupName##_SytemRegister_Helper\
 	 {\
           private:\
@@ -63,12 +37,11 @@ namespace SECS
      __SystemRegister<__className>* __className##_##__groupName##_SytemRegister_Helper::m_##__className##_##__groupName##_register = new __SystemRegister<__className>(#__className, # __groupName);\
 
 
+#define DECLARE_SYSTEM_COMPONENTS(...) __VA_ARGS__
 
-#define DEF_SYSTEM_COMPONENTS(...) __VA_ARGS__
-
-#define DEF_SYSTEM_UPDATE(__className, __funcAddress, __THIS, ...)\
+#define DECLARE_SYSTEM_UPDATE(__className, __funcAddress, __THIS, ...)\
 private:\
-ComponentSystemData<__className, __VA_ARGS__> SystemData = ComponentSystemData<__className, __VA_ARGS__>(__THIS, __funcAddress);\
+ComponentSystemData< __className, __VA_ARGS__> SystemData = ComponentSystemData<__className, __VA_ARGS__>(__THIS, __funcAddress);\
 public:\
 	inline void Update(SEntityManager* EntityManager) \
 	{\
@@ -86,7 +59,7 @@ public:\
 		inline virtual void CollectSystemBoostInfos(SEntityManager* entm, SArcheTypeManager* arcm) = 0;
 	};
 
-	REGISTRY_SYSTEM_TO_GROUP(SSystem, SECSDefaultGroup);
+
 	//REGISTRY_SYSTEM_TO_GROUP(SSystem, TestGroup);
 	//DEF_SYSTEM_UPDATE(SSystem, &SSystem::Update_Implementation, this, DEF_SYSTEM_COMPONENTS(ComponentA, ComponentB));
 	class SSystem : public ___SSystemBase
@@ -117,6 +90,7 @@ public:\
 			// Callback
 			inline void __update_Internal(SEntityManager* EntityManager)
 			{
+				if(callback != nullptr)
 				EntityManager->Each<T, Cs ...>(callback, _this, _this->m_Types);
 			}
 			// Collect
@@ -129,9 +103,9 @@ public:\
 			}
 		public:
 			size_t* hashes; 
-			void(T::* callback)(SEntity, Cs*...);
+			void(T::* callback)(SEntity, Cs*...) = nullptr;
 			T* _this = nullptr;
-			// To fetch at initial time.
+			
 		};
 	private:
 		// Properties
@@ -140,17 +114,10 @@ public:\
 		SSystem* RefSystems = nullptr;
 
 	public:
-		inline void CollectNewTypeInfo(SArcheType* _archetype)
-		{
-			SystemData.__collect_NewTypeInfo(_archetype);
-		}
-	public:
-		DEF_SYSTEM_UPDATE(SSystem, &SSystem::Update_Implementation, this, DEF_SYSTEM_COMPONENTS(ComponentA, ComponentB));
+		DECLARE_SYSTEM_UPDATE(SSystem, &SSystem::Update_Implementation, this, DECLARE_SYSTEM_COMPONENTS(ComponentA, ComponentB));
 		inline void Update_Implementation(SEntity entity, ComponentA* a, ComponentB* b)
 		{
-			a->x += 5;
-			a->y += 5;
-			a->z += 5;
+
 		}
 
 	public:
@@ -163,7 +130,14 @@ public:\
 			SystemData.__collectInfos_Internal(_entityManager, _archeTypeManager);
 		}
 		virtual ~SSystem() {};
+	protected:
+		static std::unordered_map<std::string, SSystem*> SystemGroups;
+		static std::unordered_map<std::string, SSystem*> InitSystemGroups()
+		{
+			std::unordered_map<std::string, SSystem*> _Groups;
+			return _Groups;
+		}
 	};
-
-
+	std::unordered_map<std::string, SSystem*> SSystem::SystemGroups = SSystem::InitSystemGroups();
+	//REGISTRY_SYSTEM_TO_ROOT_GROUP(SSystem, SECSDefaultGroup);
 }

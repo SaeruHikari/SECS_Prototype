@@ -9,8 +9,13 @@ D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(34,1): warning C426
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(172,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(21,2): warning C4099: “SECS::SChunk”: 类型名称以前使用“class”现在使用的是“struct”
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(20): message : 参见“SECS::SChunk”的声明
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(180,1): warning C4267: “=”: 从“size_t”转换到“int32_t”，可能丢失数据
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(152,1): warning C4267: “=”: 从“size_t”转换到“int32_t”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(189,1): warning C4267: “=”: 从“size_t”转换到“int32_t”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(155,1): warning C4267: “=”: 从“size_t”转换到“int32_t”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\CommandList\SCommand.hpp(7,2): warning C4099: “SECS::SCommand”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\CommandList\SCommand.hpp(6): message : 参见“SECS::SCommand”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\CommandList\SCommand.hpp(11,31): warning C4099: “SECS::SDestoryEntityCommand”: 类型名称以前使用“class”现在使用的是“struct”
+D:\Coding\SECS_Prototype\SECS_Prototype\CommandList\SCommand.hpp(11): message : 参见“SECS::SDestoryEntityCommand”的声明
+D:\Coding\SECS_Prototype\SECS_Prototype\CommandList\SCommandMachine.hpp(12,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(29,13): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(30,14): warning C4244: “初始化”: 从“ULONGLONG”转换到“float”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(32,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
@@ -21,27 +26,29 @@ D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(52,25): warning C4244
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(57,27): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(63,25): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(72,26): warning C4244: “=”: 从“ULONGLONG”转换到“float”，可能丢失数据
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(238,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(57): message : 查看对正在编译的函数 模板 实例化“int SECS::SChunk::ConstructionOnChunk<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(const SECS::SEntity &&) noexcept”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(42): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SArcheTypeManager *) noexcept”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(108): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SWorld::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(161,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(151): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::AddComponent<double>(SECS::SEntity &,SECS::SArcheTypeManager *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(247,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(59): message : 查看对正在编译的函数 模板 实例化“int SECS::SChunk::ConstructionOnChunk<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(const SECS::SEntity &&) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SWorld.hpp(43): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SEntityManager::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(SECS::SArcheTypeManager *) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\SECS_Prototype.cpp(113): message : 查看对正在编译的函数 模板 实例化“SECS::SEntity SECS::SWorld::CreateEntity<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC,SECS::ComponentD>(void)”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(163,1): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message : 查看对正在编译的函数 模板 实例化“int SECS::SArcheType::GetComponentIndex<T>(void)”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         with
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         [
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :             T=SECS::ComponentA
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SChunk.hpp(109): message :         ]
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(179): message : 查看对正在编译的函数 模板 实例化“T *SECS::SChunk::__getCompPtr<SECS::ComponentA>(size_t) noexcept”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(179): message :         with
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(179): message :         [
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(179): message :             T=SECS::ComponentA
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(179): message :         ]
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(120): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__cdecl SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(120): message :         with
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(120): message :         [
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(120): message :             T=SECS::SDebugSystem
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(120): message :         ]
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(119): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”时
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(196): message : 查看对正在编译的函数 模板 实例化“T *SECS::SChunk::__getCompPtr<SECS::ComponentA>(size_t) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(196): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(196): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(196): message :             T=SECS::ComponentA
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(196): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(94): message : 查看对正在编译的函数 模板 实例化“void SECS::SEntityManager::Each<T,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void (__cdecl SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *),T *,const SECS::SArcheTypeList &) noexcept”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(94): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(94): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(94): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(94): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(92): message : 在编译 类 模板 成员函数“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”时
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“void SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::__update_Internal(SECS::SEntityManager *)”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的 类 模板 实例化“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(117,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
@@ -51,12 +58,12 @@ D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127)
 D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :             T=SECS::ComponentA
 D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(127): message :         ]
 D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(40): message : 查看对正在编译的函数 模板 实例化“void TemplatePackUtils::getHash_Internal<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(size_t,size_t *)”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(108): message : 查看对正在编译的函数 模板 实例化“size_t *TemplatePackUtils::GetHashes<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(105): message : 在编译 类 模板 成员函数“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::ComponentSystemData(T *,void (__cdecl SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *))”时
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(105): message :         with
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(105): message :         [
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(105): message :             T=SECS::SDebugSystem
-D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(105): message :         ]
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(81): message : 查看对正在编译的函数 模板 实例化“size_t *TemplatePackUtils::GetHashes<SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>(void)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(78): message : 在编译 类 模板 成员函数“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::ComponentSystemData(T *,void (__cdecl SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *))”时
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(78): message :         with
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(78): message :         [
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(78): message :             T=SECS::SDebugSystem
+D:\Coding\SECS_Prototype\SECS_Prototype\Types\SSystem.hpp(78): message :         ]
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message : 查看对正在编译的函数 模板 实例化“SECS::SSystem::ComponentSystemData<SECS::SDebugSystem,SECS::ComponentA,SECS::ComponentB,SECS::ComponentC>::ComponentSystemData(T *,void (__cdecl SECS::SDebugSystem::* )(SECS::SEntity,SECS::ComponentA *,SECS::ComponentB *,SECS::ComponentC *))”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :         with
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :         [
@@ -65,7 +72,7 @@ D:\Coding\SECS_Prototype\SECS_Prototype\Types\DebugSystem.hpp(8): message :     
 D:\Coding\SECS_Prototype\SECS_Prototype\TemplateUtils\TemplatePackUtils.hpp(118,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(182,1): warning C4554: “&”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
 D:\Coding\SECS_Prototype\SECS_Prototype\Types\SArcheType.hpp(215): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::__init__Internal<SECS::ComponentB>(void)”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(127): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::Init<SECS::ComponentB>(SECS::SEntity *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(130): message : 查看对正在编译的函数 模板 实例化“void SECS::SArcheType::Init<SECS::ComponentB>(SECS::SEntity *)”的引用
 D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SArcheTypeManager.hpp(77): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::CreateArcheType<SECS::ComponentB>(SECS::SEntity *)”的引用
-D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(47): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::GetArcheType<SECS::ComponentB>(SECS::SEntity *)”的引用
+D:\Coding\SECS_Prototype\SECS_Prototype\Managers\SEntityManager.hpp(49): message : 查看对正在编译的函数 模板 实例化“SECS::SArcheType *SECS::SArcheTypeManager::GetArcheType<SECS::ComponentB>(SECS::SEntity *)”的引用
   SECS_Prototype.vcxproj -> D:\Coding\SECS_Prototype\x64\Debug\SECS_Prototype.exe

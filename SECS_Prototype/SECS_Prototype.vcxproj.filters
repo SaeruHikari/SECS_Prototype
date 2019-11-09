@@ -53,9 +53,6 @@
     <ClInclude Include="Types\Containers\SChunkList.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Types\SWorld.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Types\Containers\SSystemList.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -69,6 +66,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CommandList\SCommand.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\SWorld.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Types\SSystemGroup.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

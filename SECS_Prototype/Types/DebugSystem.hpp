@@ -5,7 +5,7 @@ namespace SECS
 {
 	class SDebugSystem : public SSystem
 	{
-		DEF_SYSTEM_UPDATE(SDebugSystem, &SDebugSystem::Update_Implementation, this, DEF_SYSTEM_COMPONENTS(ComponentA, ComponentB, ComponentC));
+		DECLARE_SYSTEM_UPDATE(SDebugSystem, &SDebugSystem::Update_Implementation, this, DECLARE_SYSTEM_COMPONENTS(ComponentA, ComponentB, ComponentC));
 	public:
 		SDebugSystem()
 		{
@@ -17,6 +17,6 @@ namespace SECS
 		}
 
 	};
-	REGISTRY_SYSTEM_TO_GROUP(SDebugSystem, SECSDefaultGroup1);
+	REGISTRY_SYSTEM_TO_ROOT_GROUP(SDebugSystem, SECSDefaultGroup1);
 
 }
